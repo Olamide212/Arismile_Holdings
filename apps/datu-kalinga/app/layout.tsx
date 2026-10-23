@@ -1,8 +1,9 @@
 import { group } from "@arismile/brand";
-import { revealBootScript, rootMetadata, ScrollReveal, SiteFooter, SiteHeader, siteEmail } from "@arismile/site-kit";
+import { revealBootScript, rootMetadata, ScrollReveal, SiteHeader, siteEmail } from "@arismile/site-kit";
 import { SkipLink } from "@arismile/ui";
 import type { Viewport } from "next";
 import { Josefin_Sans, Open_Sans } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -26,7 +27,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ScrollReveal />
         <SkipLink href="#main" />
         <SiteHeader
+          variant="boxed"
           name={site.name}
+          tagline={site.hero.eyebrow}
           logo={site.logo}
           logoClassName={site.logoClassName}
           services={site.services.items.map(({ slug, title }) => ({ slug, title }))}
@@ -36,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>
-        <SiteFooter site={site} />
+        <SiteFooter />
       </body>
     </html>
   );

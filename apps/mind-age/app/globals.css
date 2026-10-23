@@ -6,14 +6,14 @@
 
 /* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
-  --color-bg: #ffffff;
-  --color-fg: #221f2b;
-  --color-surface: #f6f4fb;
-  --color-primary: #7a1f2b;
+  --color-bg: #0d0b14;
+  --color-fg: #ecebf4;
+  --color-surface: #17141f;
+  --color-primary: #b3263a;
   --color-on-primary: #ffffff;
-  --color-accent: #7a1f2b;
+  --color-accent: #c4bff0;
   --color-highlight: #c4bff0;
-  --color-band: #1b1726;
+  --color-band: #120f1b;
   --color-on-band: #ffffff;
 
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
@@ -22,7 +22,7 @@
 
 :root {
   --container-max: 1240px;
-  --radius: 14px;
+  --radius: 18px;
 }
 
 html {
@@ -50,4 +50,13 @@ body {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+}
+
+/* Circuit grid used behind heroes and footer. */
+.circuit-grid {
+  background-image:
+    linear-gradient(to right, rgb(236 235 244 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(236 235 244 / 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
 }

@@ -118,13 +118,16 @@ Create **one Vercel project per app**, all connected to this repository:
   | Project | Domain |
   | --- | --- |
   | Holdings | `arismile.ng` |
-  | 9-Town | `9townnigltd.com` |
-  | Oceania | `oceanialtd.com` |
-  | Datu Kalinga | `datukalinga.com` |
-  | Cadillac Security | `cadillacsecurity.com.ng` |
-  | Petogas | `petogas.com` |
+  | 9-Town | `www.9townnigltd.com` (apex `9townnigltd.com` redirects to www) |
+  | Oceania | `www.oceanialtd.com` (apex `oceanialtd.com` redirects to www) |
+  | Datu Kalinga | `www.datukalinga.com` (apex `datukalinga.com` redirects to www) |
+  | Cadillac Security | `www.cadillacsecurity.com.ng` (apex `cadillacsecurity.com.ng` redirects to www) |
+  | Petogas | `www.petogas.com` (apex `petogas.com` redirects to www) |
   | Mind Age | `mind-age.vercel.app` (temporary, until a domain is assigned) |
   | Arismile Advisory | `arismile-advisory-gamma.vercel.app` (temporary) |
+
+  For each subsidiary, add both the `www` and the bare domain in Vercel, set
+  `www` as the primary domain, and let the bare domain redirect to it.
 
   Subsidiary domains live in `website` in `packages/brand/src/index.ts`; the
   Holdings site links to them and each subsidiary app uses its domain as the
@@ -135,23 +138,42 @@ Create **one Vercel project per app**, all connected to this repository:
 
 ## Subsidiary sites
 
-All seven subsidiary apps are multi-page sites built on `@arismile/site-kit`:
+All seven subsidiary apps are multi-page sites. Each has its **own layout and
+design**; `@arismile/site-kit` only supplies shared behaviour (header styles,
+mobile drawer, contact form + API, FAQ, SEO helpers, scroll animations) and
+inner-page templates that render the site's own section components.
+
+| Site | Design concept | Header style |
+| --- | --- | --- |
+| 9-Town | Atelier: architectural editorial, full-bleed photography, numbered rows, oversized wordmark | `overlay` |
+| Oceania | Tide: maritime, wave-edged sections, swipeable service cards, zig-zag timeline | `solid` |
+| Datu Kalinga | Strata: brutalist, bordered cells, diagonal hero, ledger table, rock-layer process | `boxed` |
+| Mind Age | Circuit: dark tech, glow and grid, bento services, stepper | `pill` |
+| Arismile Advisory | Ledger: private-bank editorial, centred serif headings, Roman numerals | `centered` |
+| Cadillac Security | Sentinel: tactical, corner brackets, dossier cards, phase track | `hud` |
+| Petogas | Flow: corporate energy, angled edges, gold tiles, pipeline process | `utility` |
+
+Per site:
+
+- `app/page.tsx`: the custom home page.
+- `components/ui.tsx`: the site's section components (page header, headings,
+  services, features, process, values, call to action), passed to the shared
+  inner pages as `ui`.
+- `components/SiteFooter.tsx`: the site's footer.
+- `app/globals.css`: colour tokens, radius and any site-specific effects.
+- `app/layout.tsx`: fonts and the header style.
+- `lib/site.ts`: all content. Verified copy comes from `@arismile/brand`;
+  copy marked as drafted was written for these sites and should be reviewed by
+  each company before launch.
 
 | Route | Content |
 | --- | --- |
-| `/` | Hero, introduction, services, why-us highlights, process, industries, call to action |
-| `/about` | Story, mission/vision/values, process, company-specific sections (e.g. Cadillac's creed) |
-| `/services` and `/services/[slug]` | Service overview, and one page per service (overview, what's included, process, related services) |
+| `/` | Custom home page |
+| `/about` | Story, mission/vision/values, process, company-specific sections |
+| `/services`, `/services/[slug]` | Service overview and one page per service |
 | `/industries` | Sectors served |
 | `/contact` | Contact details, validated enquiry form (`/api/contact`) and FAQ |
 | `/privacy-policy` | Privacy policy naming the subsidiary |
-
-Each site owns its identity: colour tokens and radius in `app/globals.css`,
-fonts in `app/layout.tsx`, images in `public/images` (`lib/images.ts`), and all
-content in `lib/site.ts`. Verified copy comes from `@arismile/brand`; content
-marked as drafted in `lib/site.ts` was written for these sites and should be
-reviewed by each company before launch. Any route file can be replaced with
-custom JSX if a site needs a bespoke page.
 
 The contact form forwards to `CONTACT_WEBHOOK_URL` when set (see each app's
 `.env.example`); without it, visitors are offered a pre-filled email instead.

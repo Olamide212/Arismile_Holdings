@@ -1,5 +1,6 @@
 import type { ContentBlock, ContentGroup, SubsidiaryProfile, SubsidiaryRecord } from "@arismile/brand";
 import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 
 export interface ImageAsset {
   src: string;
@@ -74,4 +75,50 @@ export interface SiteContent {
   contact: { title: string; intro: string };
   cta: { title: string; text: string };
   footerLine: string;
+}
+
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+
+export interface PageHeroProps {
+  site: SiteContent;
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  /** Breadcrumb trail, starting with Home and ending with this page. */
+  crumbs: Crumb[];
+}
+
+export interface HeadingProps {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  id?: string;
+  /** Rendered on the site's dark band colour. */
+  onDark?: boolean;
+}
+
+export interface SectionSlotProps {
+  site: SiteContent;
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  id: string;
+}
+
+/**
+ * Per-site presentation. Each site implements these with its own layout;
+ * every slot renders a complete section (background, spacing and content),
+ * so inner pages built by site-kit take on the site's design.
+ */
+export interface SiteUI {
+  PageHero: ComponentType<PageHeroProps>;
+  Heading: ComponentType<HeadingProps>;
+  ServicesSection: ComponentType<SectionSlotProps & { services: ServiceContent[] }>;
+  FeaturesSection: ComponentType<SectionSlotProps & { items: IconItem[] }>;
+  ProcessSection: ComponentType<SectionSlotProps & { steps: { title: string; body: string }[] }>;
+  ValuesSection: ComponentType<SectionSlotProps & { items: ContentBlock[] }>;
+  CtaSection: ComponentType<{ site: SiteContent }>;
 }

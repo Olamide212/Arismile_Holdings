@@ -57,3 +57,25 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+
+/* Tactical grid lines and a slow scan line. */
+.sentinel-grid {
+  background-image:
+    linear-gradient(to right, rgb(238 240 243 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(238 240 243 / 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.sentinel-scan {
+  background: linear-gradient(to bottom, transparent, rgb(215 38 47 / 0.18), transparent);
+  animation: sentinel-scan 7s linear infinite;
+}
+
+@keyframes sentinel-scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(900%);
+  }
+}

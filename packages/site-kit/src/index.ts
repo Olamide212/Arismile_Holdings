@@ -1,27 +1,16 @@
 export * from "./types";
-export { contactOptions, navItems, servicePath, siteEmail, siteGroups, siteValues } from "./utils";
+export { contactOptions, groupLinks, navItems, servicePath, siteEmail, siteGroups, siteValues } from "./utils";
 export { ButtonLink, Section, SectionIntro } from "./components/primitives";
-export {
-  CtaBand,
-  FaqList,
-  FeatureGrid,
-  GroupSection,
-  HomeHero,
-  PageHero,
-  ProcessSteps,
-  ServiceCard,
-  ServicesGrid,
-  ValuesGrid,
-} from "./components/sections";
-export { SiteHeader } from "./components/SiteHeader";
-export { SiteFooter } from "./components/SiteFooter";
+export { FaqList } from "./components/FaqList";
+export { SiteHeader, type HeaderVariant } from "./components/SiteHeader";
 export { ContactForm } from "./components/ContactForm";
+export { ScrollReveal } from "./components/ScrollReveal";
+export { reveal, revealBootScript, stagger, type RevealVariant } from "./reveal";
 export {
   AboutPage,
   buildRobots,
   buildSitemap,
   ContactPage,
-  HomePage,
   IndustriesPage,
   NotFoundPage,
   pageMetadata,
@@ -32,5 +21,3 @@ export {
   ServicesPage,
   serviceStaticParams,
 } from "./pages";
-export { ScrollReveal } from "./components/ScrollReveal";
-export { reveal, revealBootScript, stagger, type RevealVariant } from "./reveal";

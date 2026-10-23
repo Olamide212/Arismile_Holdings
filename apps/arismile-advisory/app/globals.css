@@ -6,13 +6,13 @@
 
 /* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
-  --color-bg: #ffffff;
+  --color-bg: #fbfaf6;
   --color-fg: #0f2340;
-  --color-surface: #f2f5f8;
+  --color-surface: #f1ece1;
   --color-primary: #0f2340;
   --color-on-primary: #ffffff;
-  --color-accent: #2f7a1f;
-  --color-highlight: #ffcc00;
+  --color-accent: #7a5f12;
+  --color-highlight: #c9a227;
   --color-band: #0f2340;
   --color-on-band: #ffffff;
 

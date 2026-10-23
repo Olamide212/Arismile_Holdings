@@ -1,4 +1,4 @@
-import { subsidiaryEmail } from "@arismile/brand";
+import { subsidiaries, subsidiaryEmail } from "@arismile/brand";
 import { generalEnquiry } from "./contact";
 import type { SiteContent } from "./types";
 
@@ -31,4 +31,14 @@ export function contactOptions(site: SiteContent) {
 /** The subsidiary's own email address (group address if it has none). */
 export function siteEmail(site: SiteContent) {
   return subsidiaryEmail(site.record);
+}
+
+/** Links to Arismile Holdings and the other group companies, for footers. */
+export function groupLinks(site: SiteContent) {
+  return [
+    { name: "Arismile Holdings", href: site.holdingsUrl },
+    ...subsidiaries
+      .filter((s) => s.slug !== site.record.slug)
+      .map((s) => ({ name: s.name, href: s.website ?? `${site.holdingsUrl}${s.holdingsPath}` })),
+  ];
 }

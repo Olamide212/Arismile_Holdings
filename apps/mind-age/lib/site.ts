@@ -120,7 +120,8 @@ export const site: SiteContent = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? record.website ?? "http://localhost:3004",
   holdingsUrl: process.env.NEXT_PUBLIC_HOLDINGS_URL ?? holdingsSiteUrl,
   logo,
-  logoClassName: "h-14",
+  // White silhouette of the logo for the dark theme.
+  logoClassName: "h-11 brightness-0 invert",
   images,
   hero: {
     variant: "split",

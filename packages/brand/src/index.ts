@@ -124,7 +124,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Real Estate & Development",
     tagline: "Architecting Sustainable Urban Futures",
     holdingsPath: "/subsidiaries/nine-town",
-    website: "https://9townnigltd.com",
+    website: "https://www.9townnigltd.com",
     email: "info@9townnigltd.com",
   },
   {
@@ -135,7 +135,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Maritime & Logistics",
     tagline: "Redefining the Frontier of Marine and Energy Engineering",
     holdingsPath: "/subsidiaries/oceania",
-    website: "https://oceanialtd.com",
+    website: "https://www.oceanialtd.com",
     email: "info@oceanialtd.com",
   },
   {
@@ -146,7 +146,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Energy & Resources",
     tagline: "Pioneering the Future of Global Mineral Resources",
     holdingsPath: "/subsidiaries/datu-kalinga",
-    website: "https://datukalinga.com",
+    website: "https://www.datukalinga.com",
     email: "info@datukalinga.com",
   },
   {
@@ -179,7 +179,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Security & Logistics",
     tagline: "Securing Assets. Protecting Life. Benchmarking Global Excellence.",
     holdingsPath: "/subsidiaries/cadillac-security",
-    website: "https://cadillacsecurity.com.ng",
+    website: "https://www.cadillacsecurity.com.ng",
     email: "info@cadillacsecurity.com.ng",
   },
   {
@@ -190,14 +190,14 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Oil & Gas Services",
     tagline: "Fueling Progress. Powering the Future of the Indigenous Energy Frontier.",
     holdingsPath: "/subsidiaries/petogas-limited",
-    website: "https://petogas.com",
+    website: "https://www.petogas.com",
     email: "info@petogas.com",
   },
 ];
 
-/** "https://www.example.com/" -> "example.com", for link labels. */
+/** "https://www.example.com/" -> "www.example.com", for link labels. */
 export function displayDomain(url: string): string {
-  return new URL(url).hostname.replace(/^www\./, "");
+  return new URL(url).hostname;
 }
 
 /** Email address for a subsidiary's enquiries. */
