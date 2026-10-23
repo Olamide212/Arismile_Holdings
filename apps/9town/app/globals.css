@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@source "../../../packages/ui/src";
+
+/*
+ * 9-Town brand tokens (taken from the company logo). Placeholder identity
+ * until this site's own design is commissioned; deliberately independent of
+ * the Holdings design system.
+ */
+@theme {
+  --color-primary: #f48120;
+  --color-accent: #ffb36b;
+  --color-ink: #111111;
+  --color-surface: #fff6ee;
+  --font-display: var(--font-display-face), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --container-max: 1180px;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}

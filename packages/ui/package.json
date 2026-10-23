@@ -1,0 +1,23 @@
+{
+  "name": "@arismile/ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional, design-neutral React primitives shared by Arismile sites.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@arismile/config": "*",
+    "@types/react": "^19.3.0",
+    "react": "^19.3.1",
+    "typescript": "5.9.3"
+  }
+}

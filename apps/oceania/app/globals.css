@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@source "../../../packages/ui/src";
+
+/*
+ * Oceania brand tokens (taken from the company logo). Placeholder identity
+ * until this site's own design is commissioned; deliberately independent of
+ * the Holdings design system.
+ */
+@theme {
+  --color-primary: #0b74c4;
+  --color-accent: #7cc4f2;
+  --color-ink: #1f2a33;
+  --color-surface: #eef7fd;
+  --font-display: var(--font-display-face), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --container-max: 1180px;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
