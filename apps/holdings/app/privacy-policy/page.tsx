@@ -1,14 +1,11 @@
 import { group } from "@arismile/brand";
 import { Container } from "@arismile/ui";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { PageBanner } from "@/components/shared/PageBanner";
 import { reveal } from "@/lib/reveal";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "How Arismile Holdings collects, uses and protects personal information.",
-  alternates: { canonical: "/privacy-policy" },
-};
+export const metadata: Metadata = pageMeta("/privacy-policy", "Privacy Policy", "How Arismile Holdings collects, uses and protects personal information.");
 
 /** Text from arismile.ng/privacy-policy. */
 export default function PrivacyPolicyPage() {

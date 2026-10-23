@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Heading, ui } from "@/components/ui";
 import { site } from "@/lib/site";
 
-export const metadata = pageMetadata("/", undefined, site.profile.summary);
+export const metadata = pageMetadata(site, "/", undefined, site.profile.summary);
 
 export default function HomePage() {
   const { ServicesSection, FeaturesSection, ProcessSection, ValuesSection, CtaSection } = ui;
@@ -29,7 +29,7 @@ export default function HomePage() {
             <span aria-hidden className="mt-10 block h-px w-full bg-fg/20" />
             <p className="mt-8 max-w-lg text-lg leading-relaxed opacity-75">{site.hero.text}</p>
             <div className="mt-10 flex flex-wrap items-center gap-8">
-              <Link href="/contact" className="border border-fg bg-fg px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.3em] text-bg transition-colors hover:bg-transparent hover:text-fg">
+              <Link href="/contact" className="border border-primary bg-primary px-9 py-4 text-[13px] font-semibold uppercase tracking-[0.3em] text-on-primary transition-colors hover:bg-transparent hover:text-primary">
                 Book a consultation
               </Link>
               <Link href="/services" className="group inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.3em] text-accent">
@@ -38,7 +38,8 @@ export default function HomePage() {
             </div>
           </div>
           <div className="load-in relative">
-            <div aria-hidden className="absolute -inset-4 border border-highlight" />
+            <div aria-hidden className="absolute -inset-4 border-2 border-highlight" />
+            <div aria-hidden className="absolute -bottom-8 -left-8 size-24 bg-secondary/15" />
             <Image src={hero.src} alt={hero.alt} width={hero.width} height={hero.height} priority sizes="(min-width: 1024px) 45vw, 100vw" className="relative aspect-[4/5] w-full object-cover" />
           </div>
         </Container>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Heading, ui, Wave } from "@/components/ui";
 import { site } from "@/lib/site";
 
-export const metadata = pageMetadata("/", undefined, site.profile.summary);
+export const metadata = pageMetadata(site, "/", undefined, site.profile.summary);
 
 export default function HomePage() {
   const { ServicesSection, FeaturesSection, ProcessSection, CtaSection } = ui;

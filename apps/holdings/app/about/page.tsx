@@ -1,5 +1,6 @@
 import { Container } from "@arismile/ui";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { AboutSection } from "@/components/home/AboutSection";
 import { CompetenceSection } from "@/components/home/CompetenceSection";
 import { DiscoverMore } from "@/components/shared/DiscoverMore";
@@ -9,11 +10,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { aboutPage } from "@/lib/content/company";
 import { reveal } from "@/lib/reveal";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: aboutPage.profile[0],
-  alternates: { canonical: "/about" },
-};
+export const metadata: Metadata = pageMeta("/about", "About Us", aboutPage.profile.join(" "));
 
 export default function AboutPage() {
   return (

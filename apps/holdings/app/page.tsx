@@ -1,5 +1,6 @@
 import { group } from "@arismile/brand";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { AboutSection } from "@/components/home/AboutSection";
 import { CompetenceSection } from "@/components/home/CompetenceSection";
 import { HeroSlider, type HeroSlide } from "@/components/home/HeroSlider";
@@ -9,9 +10,7 @@ import { SubsidiariesSection } from "@/components/subsidiaries/SubsidiariesSecti
 import { subsidiaryContent } from "@/lib/content/subsidiaries";
 import { siteDescription, siteUrl } from "@/lib/site";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata: Metadata = pageMeta("/", undefined, siteDescription);
 
 const heroSlides: HeroSlide[] = subsidiaryContent.map((s) => ({
   id: s.slug,

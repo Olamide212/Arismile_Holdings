@@ -2,17 +2,18 @@ import { group } from "@arismile/brand";
 import { BrandIcon, Container } from "@arismile/ui";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { PageBanner } from "@/components/shared/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description: `Contact Arismile Holdings in Abuja and Lagos. Call ${group.phone.display} or email ${group.email}.`,
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = pageMeta(
+  "/contact",
+  "Contact Us",
+  `Contact Arismile Holdings in Abuja and Lagos. Call ${group.phone.display} or email ${group.email}.`,
+);
 
 function mapsLink(lines: readonly string[]) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lines.join(", "))}`;

@@ -71,7 +71,7 @@ const ServicesSection: SiteUI["ServicesSection"] = ({ eyebrow, title, intro, id,
       <ol className="mt-16 grid gap-x-16 border-t border-fg/20 md:grid-cols-2">
         {services.map((s, i) => (
           <li key={s.slug} {...reveal("up", stagger(i, 2))} className="group relative border-b border-fg/20 py-10">
-            <p className="font-display text-xl italic text-accent">{toRoman(i)}.</p>
+            <p className="font-display text-xl italic text-secondary">{toRoman(i)}.</p>
             <h3 className="mt-3 font-display text-3xl font-semibold leading-snug">
               <Link href={servicePath(s.slug)} className="after:absolute after:inset-0">
                 {s.title}
@@ -96,7 +96,7 @@ const FeaturesSection: SiteUI["FeaturesSection"] = ({ eyebrow, title, intro, id,
       <ul className={cn("mt-16 grid gap-y-12 text-center sm:grid-cols-2 lg:divide-x lg:divide-fg/15", items.length % 3 === 0 ? "lg:grid-cols-3" : "lg:grid-cols-4")}>
         {items.map(({ icon: Icon, title: t, body }, i) => (
           <li key={t} {...reveal("up", stagger(i, 4))} className="px-8">
-            <Icon aria-hidden className="mx-auto size-7 text-highlight" strokeWidth={1.25} />
+            <Icon aria-hidden className="mx-auto size-7 text-secondary" strokeWidth={1.25} />
             <h3 className="mt-5 font-display text-2xl font-semibold">{t}</h3>
             <p className="mt-3 leading-relaxed opacity-75">{body}</p>
           </li>
@@ -131,7 +131,7 @@ const ValuesSection: SiteUI["ValuesSection"] = ({ eyebrow, title, intro, id, ite
       <ul className={cn("mt-16 grid gap-y-12 md:grid-cols-2 md:divide-fg/15 lg:divide-x", items.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
         {items.map((item, i) => (
           <li key={item.title} {...reveal("up", stagger(i))} className="px-8 text-center">
-            <p className="font-display text-lg italic text-accent">{item.label ?? toRoman(i)}</p>
+            <p className="font-display text-lg italic text-secondary">{item.label ?? toRoman(i)}</p>
             <h3 className="mt-3 font-display text-3xl font-semibold">{item.title}</h3>
             <p className="mt-4 leading-relaxed opacity-75">{item.body}</p>
           </li>
@@ -149,7 +149,7 @@ const CtaSection: SiteUI["CtaSection"] = ({ site }) => (
         <p className="mx-auto mt-6 max-w-xl text-lg opacity-75">{site.cta.text}</p>
         <Link
           href="/contact"
-          className="mt-10 inline-flex items-center gap-3 border border-fg px-10 py-4 text-[13px] font-semibold uppercase tracking-[0.3em] transition-colors hover:bg-fg hover:text-bg"
+          className="mt-10 inline-flex items-center gap-3 border border-primary bg-primary px-10 py-4 text-[13px] font-semibold uppercase tracking-[0.3em] text-on-primary transition-colors hover:bg-transparent hover:text-primary"
         >
           Book a consultation
         </Link>

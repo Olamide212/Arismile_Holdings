@@ -172,8 +172,25 @@ Per site:
 | `/about` | Story, mission/vision/values, process, company-specific sections |
 | `/services`, `/services/[slug]` | Service overview and one page per service |
 | `/industries` | Sectors served |
+| `/team` | Leadership team with profile dialogs (the Arismile leadership, shared by Holdings and every subsidiary) |
 | `/contact` | Contact details, validated enquiry form (`/api/contact`) and FAQ |
 | `/privacy-policy` | Privacy policy naming the subsidiary |
 
 The contact form forwards to `CONTACT_WEBHOOK_URL` when set (see each app's
 `.env.example`); without it, visitors are offered a pre-filled email instead.
+
+### SEO, preloader and shared features
+
+- **SEO (all eight sites):**
+  - Every page has a canonical URL, full Open Graph and Twitter metadata with a share image, keywords and robots directives.
+  - Structured data (JSON-LD):
+    - **Organization** (with Arismile Holdings as parent) and **WebSite** on every page;
+    - **BreadcrumbList** on inner pages;
+    - **Service** on service pages, **FAQPage** on Contact, and **Person** entries on Team pages.
+  - A web app manifest (`/manifest.webmanifest`) and a sitemap including `/team`.
+  - Subsidiary helpers live in `packages/site-kit/src/seo.tsx`; Holdings uses `apps/holdings/lib/seo.tsx`.
+- **Preloader:**
+  - A branded first-load overlay that fades out once the page is interactive and fonts are ready. It does not wait for images.
+  - A CSS fail-safe hides it after 3s even if JavaScript never runs.
+  - It is hidden from screen readers and respects reduced motion.
+- **Team data:** the leadership is the same for Holdings and every subsidiary. It lives in `packages/brand/src/leadership.ts`, so updating it there updates all eight sites. Team photos are in each app's `public/images/team/`.

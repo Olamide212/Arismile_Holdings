@@ -3,6 +3,7 @@ import { cn, Container } from "@arismile/ui";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { FleetScroller } from "./FleetScroller";
 
 /*
  * Oceania "Tide": maritime. Wave-edged sections, pill labels, a swipeable
@@ -81,11 +82,10 @@ const ServicesSection: SiteUI["ServicesSection"] = ({ eyebrow, title, intro, id,
     <Container>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <Heading id={id} eyebrow={eyebrow} title={title} intro={intro} />
-        <p className="text-sm font-semibold text-accent">Scroll to explore →</p>
       </div>
     </Container>
     <div className="mx-auto mt-12 max-w-(--container-max)">
-      <ul className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-6 sm:px-6 lg:px-10 [scrollbar-width:thin]">
+      <FleetScroller label={title}>
         {services.map((s, i) => {
           const Icon = s.icon;
           return (
@@ -112,7 +112,7 @@ const ServicesSection: SiteUI["ServicesSection"] = ({ eyebrow, title, intro, id,
             </li>
           );
         })}
-      </ul>
+      </FleetScroller>
     </div>
   </section>
 );

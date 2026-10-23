@@ -1,4 +1,4 @@
-import { subsidiaries, subsidiaryEmail } from "@arismile/brand";
+import { groupLeadership, subsidiaries, subsidiaryEmail } from "@arismile/brand";
 import { generalEnquiry } from "./contact";
 import type { SiteContent } from "./types";
 
@@ -11,6 +11,7 @@ export const navItems = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Industries", href: "/industries" },
+  { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -41,4 +42,15 @@ export function groupLinks(site: SiteContent) {
       .filter((s) => s.slug !== site.record.slug)
       .map((s) => ({ name: s.name, href: s.website ?? `${site.holdingsUrl}${s.holdingsPath}` })),
   ];
+}
+
+/** The site's team. Defaults to the Arismile leadership, which leads every company in the group. */
+export function siteTeam(site: SiteContent) {
+  return (
+    site.team ?? {
+      title: "Leadership",
+      intro: `Meet the leadership team of ${site.record.legalName}. The same leaders guide Arismile Holdings and every company in the Arismile group.`,
+      members: groupLeadership,
+    }
+  );
 }

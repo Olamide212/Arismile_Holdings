@@ -1,5 +1,15 @@
 import { group } from "@arismile/brand";
-import { revealBootScript, rootMetadata, ScrollReveal, SiteHeader, siteEmail } from "@arismile/site-kit";
+import {
+  JsonLd,
+  organizationJsonLd,
+  Preloader,
+  revealBootScript,
+  rootMetadata,
+  ScrollReveal,
+  SiteHeader,
+  siteEmail,
+  websiteJsonLd,
+} from "@arismile/site-kit";
 import { SkipLink } from "@arismile/ui";
 import type { Viewport } from "next";
 import { Lora, Source_Sans_3 } from "next/font/google";
@@ -25,6 +35,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="min-h-dvh overflow-x-clip bg-bg text-fg">
         <ScrollReveal />
+        <Preloader logo={site.logo} logoClassName={site.logoClassName} label={`Loading ${site.record.legalName}`} />
+        <JsonLd data={[organizationJsonLd(site), websiteJsonLd(site)]} />
         <SkipLink href="#main" />
         <SiteHeader
           variant="solid"

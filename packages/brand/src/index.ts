@@ -219,3 +219,4 @@ export {
   type SubsidiaryProfile,
   type SubsidiaryService,
 } from "./profiles";
+export { groupLeadership, type LeaderProfile } from "./leadership";

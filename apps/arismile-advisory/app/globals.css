@@ -4,17 +4,19 @@
 @source "../../../packages/ui/src";
 @source "../../../packages/site-kit/src";
 
-/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
+/* Brand tokens: green, yellow and blue from the Arismile Advisory logo. Every site-kit component reads these. */
 @theme {
-  --color-bg: #fbfaf6;
-  --color-fg: #0f2340;
-  --color-surface: #f1ece1;
-  --color-primary: #0f2340;
+  --color-bg: #ffffff;
+  --color-fg: #1c2420;
+  --color-surface: #f2f7ee;
+  --color-primary: #2f7d24;
   --color-on-primary: #ffffff;
-  --color-accent: #7a5f12;
-  --color-highlight: #c9a227;
-  --color-band: #0f2340;
+  --color-accent: #2a7020;
+  --color-highlight: #f2c200;
+  --color-band: #143a1c;
   --color-on-band: #ffffff;
+  /* Logo blue, for numerals and icons. */
+  --color-secondary: #0a7bb0;
 
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;

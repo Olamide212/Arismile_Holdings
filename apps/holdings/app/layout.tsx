@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { revealBootScript } from "@/lib/reveal";
+import { JsonLd, keywords } from "@/lib/seo";
+import { Preloader } from "@/components/layout/Preloader";
 import { siteDescription, siteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -23,6 +25,13 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   applicationName: "Arismile Holdings",
+  keywords,
+  publisher: "Arismile Holdings",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   openGraph: {
     type: "website",
     siteName: "Arismile Holdings",
@@ -32,7 +41,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [{ url: "/images/hero/datu-kalinga.jpg", width: 2400, height: 1800, alt: "Arismile Holdings" }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: ["/images/hero/datu-kalinga.jpg"] },
 };
 
 export const viewport: Viewport = {
@@ -48,6 +57,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="min-h-dvh overflow-x-clip">
         <ScrollReveal />
+        <Preloader />
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Arismile Holdings",
+            url: siteUrl,
+            inLanguage: "en-NG",
+            publisher: { "@type": "Organization", name: "Arismile Holdings", url: siteUrl },
+          }}
+        />
         <SkipLink href="#main" />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="outline-none">

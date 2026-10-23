@@ -1,4 +1,4 @@
-import type { ContentBlock, ContentGroup, SubsidiaryProfile, SubsidiaryRecord } from "@arismile/brand";
+import type { ContentBlock, ContentGroup, LeaderProfile, SubsidiaryProfile, SubsidiaryRecord } from "@arismile/brand";
 import type { LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
 
@@ -72,6 +72,11 @@ export interface SiteContent {
   industries: { title: string; intro: string; items: IconItem[] };
   services: { title: string; intro: string; items: ServiceContent[] };
   faqs: FaqItem[];
+  /**
+   * The company's team. When omitted, the Team page shows the Arismile
+   * leadership, which leads Arismile Holdings and every subsidiary.
+   */
+  team?: { title: string; intro: string; members: LeaderProfile[] };
   contact: { title: string; intro: string };
   cta: { title: string; text: string };
   footerLine: string;

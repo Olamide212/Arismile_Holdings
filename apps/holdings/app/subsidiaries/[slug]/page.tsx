@@ -13,6 +13,8 @@ import {
 import { SubsidiariesSection } from "@/components/subsidiaries/SubsidiariesSection";
 import { ExternalLinkButton } from "@/components/ui/ExternalLinkButton";
 import { getSubsidiaryContent, subsidiaryContent } from "@/lib/content/subsidiaries";
+import { abs, breadcrumbs, JsonLd, pageMeta } from "@/lib/seo";
+import { siteUrl } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -24,17 +26,12 @@ export async function generateMetadata({ params }: PageProps<"/subsidiaries/[slu
   const { slug } = await params;
   const subsidiary = getSubsidiaryContent(slug);
   if (!subsidiary) return {};
-  return {
-    title: subsidiary.legalName,
-    description: subsidiary.summary,
-    alternates: { canonical: subsidiary.holdingsPath },
-    openGraph: {
-      title: `${subsidiary.legalName} | Arismile Holdings`,
-      description: subsidiary.summary,
-      url: subsidiary.holdingsPath,
-      images: [{ url: subsidiary.heroImage.src, alt: subsidiary.heroImage.alt }],
-    },
-  };
+  return pageMeta(subsidiary.holdingsPath, subsidiary.legalName, subsidiary.summary, {
+    url: subsidiary.heroImage.src,
+    width: subsidiary.heroImage.width,
+    height: subsidiary.heroImage.height,
+    alt: subsidiary.heroImage.alt,
+  });
 }
 
 export default async function SubsidiaryPage({ params }: PageProps<"/subsidiaries/[slug]">) {
@@ -62,6 +59,25 @@ export default async function SubsidiaryPage({ params }: PageProps<"/subsidiarie
             </ExternalLinkButton>
           ) : null
         }
+      />
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { label: "Home", path: "/" },
+            { label: "Subsidiaries", path: "/subsidiaries" },
+            { label: subsidiary.cardName, path: subsidiary.holdingsPath },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: subsidiary.legalName,
+            description: subsidiary.summary,
+            url: subsidiary.website ?? abs(subsidiary.holdingsPath),
+            logo: subsidiary.logo ? abs(subsidiary.logo.src) : undefined,
+            parentOrganization: { "@type": "Organization", name: "Arismile Holdings", url: siteUrl },
+            knowsAbout: subsidiary.services.map((s) => s.title),
+          },
+        ]}
       />
       <SubsidiaryIntro subsidiary={subsidiary} />
       <SubsidiaryServices subsidiary={subsidiary} />

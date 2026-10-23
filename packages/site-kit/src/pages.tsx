@@ -1,17 +1,18 @@
 import { group } from "@arismile/brand";
 import { Container } from "@arismile/ui";
 import { ArrowUpRight, Check, Clock, Mail, MapPin, Phone } from "lucide-react";
-import type { Metadata, MetadataRoute } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { ContactForm } from "./components/ContactForm";
+import { TeamGrid } from "./components/TeamGrid";
 import { FaqList } from "./components/FaqList";
 import { ButtonLink, Section } from "./components/primitives";
 import { reveal, stagger } from "./reveal";
+import { breadcrumbJsonLd, faqJsonLd, JsonLd, serviceJsonLd, teamJsonLd } from "./seo";
 import type { Crumb, SiteContent, SiteUI } from "./types";
-import { contactOptions, servicePath, siteEmail, siteGroups, siteValues } from "./utils";
+import { contactOptions, servicePath, siteEmail, siteGroups, siteTeam, siteValues } from "./utils";
 
 /*
  * Inner-page templates. Layout-defining sections come from the site's own
@@ -51,6 +52,7 @@ export function AboutPage({ site, ui }: PageProps) {
         intro={site.profile.summary}
         crumbs={[home, { label: "About" }]}
       />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "About" }], "/about")]} />
 
       <Section labelledBy="story-heading">
         <Container className="grid gap-14 lg:grid-cols-[5fr_7fr]">
@@ -120,6 +122,7 @@ export function ServicesPage({ site, ui }: PageProps) {
   return (
     <>
       <PageHero site={site} eyebrow="What we do" title="Our Services" intro={site.services.intro} crumbs={[home, { label: "Services" }]} />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Services" }], "/services")]} />
       <ServicesSection site={site} id="services" eyebrow="Services" title={site.services.title} services={site.services.items} />
       <ProcessSection
         site={site}
@@ -155,6 +158,7 @@ export function ServiceDetailPage({ site, ui, slug }: PageProps & { slug: string
         intro={service.description}
         crumbs={[home, { label: "Services", href: "/services" }, { label: service.title }]}
       />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Services", href: "/services" }, { label: service.title }], servicePath(service.slug)), serviceJsonLd(site, service)]} />
 
       <Section labelledBy="overview-heading">
         <Container className="grid gap-14 lg:grid-cols-[7fr_5fr]">
@@ -230,6 +234,7 @@ export function IndustriesPage({ site, ui }: PageProps) {
         intro={site.industries.intro}
         crumbs={[home, { label: "Industries" }]}
       />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Industries" }], "/industries")]} />
       <FeaturesSection site={site} id="industries" eyebrow="Sectors" title={site.industries.title} items={site.industries.items} />
       <ServicesSection
         site={site}
@@ -244,6 +249,28 @@ export function IndustriesPage({ site, ui }: PageProps) {
   );
 }
 
+/* ------------------------------------------------------------------- Team */
+
+export function TeamPage({ site, ui }: PageProps) {
+  const { PageHero, Heading, CtaSection } = ui;
+  const team = siteTeam(site);
+  return (
+    <>
+      <PageHero site={site} eyebrow="Our people" title={team.title} intro={team.intro} crumbs={[home, { label: "Team" }]} />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Team" }], "/team"), teamJsonLd(site)]} />
+      <Section labelledBy="team-heading">
+        <Container>
+          <Heading id="team-heading" eyebrow="Leadership" title={`The people behind ${site.name}`} />
+          <div className="mt-14">
+            <TeamGrid members={team.members} company={site.record.legalName} />
+          </div>
+        </Container>
+      </Section>
+      <CtaSection site={site} />
+    </>
+  );
+}
+
 /* ---------------------------------------------------------------- Contact */
 
 export function ContactPage({ site, ui }: PageProps) {
@@ -252,6 +279,7 @@ export function ContactPage({ site, ui }: PageProps) {
   return (
     <>
       <PageHero site={site} eyebrow="Get in touch" title={site.contact.title} intro={site.contact.intro} crumbs={[home, { label: "Contact" }]} />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Contact" }], "/contact"), faqJsonLd(site)]} />
       <Section tone="surface" labelledBy="form-heading">
         <Container className="grid gap-10 lg:grid-cols-[5fr_7fr]">
           <div {...reveal("left")} className="space-y-4">
@@ -327,6 +355,7 @@ export function PrivacyPage({ site, ui }: PageProps) {
   return (
     <>
       <PageHero site={site} eyebrow="Legal" title="Privacy Policy" crumbs={[home, { label: "Privacy Policy" }]} />
+      <JsonLd data={[breadcrumbJsonLd(site, [home, { label: "Privacy Policy" }], "/privacy-policy")]} />
       <Section labelledBy="privacy-heading">
         <Container>
           <div
@@ -414,48 +443,4 @@ export function NotFoundPage({ site, ui }: PageProps) {
       </Section>
     </>
   );
-}
-
-/* --------------------------------------------------------------- Metadata */
-
-export function rootMetadata(site: SiteContent, themeTitle?: string): Metadata {
-  return {
-    metadataBase: new URL(site.siteUrl),
-    title: {
-      default: themeTitle ?? `${site.record.legalName} | ${site.record.tagline}`,
-      template: `%s | ${site.record.legalName}`,
-    },
-    description: site.profile.summary,
-    applicationName: site.record.legalName,
-    openGraph: {
-      type: "website",
-      siteName: site.record.legalName,
-      images: [{ url: site.images.hero.src, alt: site.images.hero.alt }],
-    },
-    twitter: { card: "summary_large_image" },
-  };
-}
-
-export function pageMetadata(path: string, title: string | undefined, description: string): Metadata {
-  return {
-    ...(title ? { title } : {}),
-    description,
-    alternates: { canonical: path },
-    openGraph: { url: path, description, ...(title ? { title } : {}) },
-  };
-}
-
-export function serviceMetadata(site: SiteContent, slug: string): Metadata {
-  const service = site.services.items.find((s) => s.slug === slug);
-  if (!service) return {};
-  return pageMetadata(servicePath(slug), service.title, service.description);
-}
-
-export function buildSitemap(site: SiteContent): MetadataRoute.Sitemap {
-  const paths = ["", "/about", "/services", "/industries", "/contact", "/privacy-policy", ...site.services.items.map((s) => servicePath(s.slug))];
-  return paths.map((p) => ({ url: `${site.siteUrl}${p}`, changeFrequency: "monthly", priority: p === "" ? 1 : 0.7 }));
-}
-
-export function buildRobots(site: SiteContent): MetadataRoute.Robots {
-  return { rules: [{ userAgent: "*", allow: "/", disallow: "/api/" }], sitemap: `${site.siteUrl}/sitemap.xml` };
 }
