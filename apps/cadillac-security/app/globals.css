@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@source "../../../packages/ui/src";
+
+/*
+ * Cadillac Security design tokens (palette taken from the company logo). Every
+ * component reads these, so the site's identity is defined here.
+ */
+@theme {
+  --color-bg: #0b0c0f;
+  --color-fg: #eef0f3;
+  --color-surface: #15171c;
+  --color-primary: #d7262f;
+  --color-on-primary: #ffffff;
+  --color-accent: #ff5a5f;
+  --color-highlight: #ff5a5f;
+  --color-band: #111318;
+  --color-on-band: #ffffff;
+
+  --font-display: var(--font-display-face), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --container-max: 1240px;
+  --radius: 0px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Tactical, condensed headings. */
+.font-display {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}

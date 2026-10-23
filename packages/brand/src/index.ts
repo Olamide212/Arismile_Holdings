@@ -183,3 +183,11 @@ export function getSubsidiary(slug: string): SubsidiaryRecord | undefined {
 
 /** Absolute link back to the Holdings site, for use by subsidiary apps. */
 export const holdingsSiteUrl = "https://arismile.ng";
+
+export {
+  subsidiaryProfiles,
+  type ContentBlock,
+  type ContentGroup,
+  type SubsidiaryProfile,
+  type SubsidiaryService,
+} from "./profiles";

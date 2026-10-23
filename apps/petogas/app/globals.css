@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@source "../../../packages/ui/src";
+
+/*
+ * Petogas design tokens (palette taken from the company logo). Every
+ * component reads these, so the site's identity is defined here.
+ */
+@theme {
+  --color-bg: #ffffff;
+  --color-fg: #0d2240;
+  --color-surface: #f7f4ee;
+  --color-primary: #0d2a4a;
+  --color-on-primary: #ffffff;
+  --color-accent: #946510;
+  --color-highlight: #d9a441;
+  --color-band: #0d2a4a;
+  --color-on-band: #ffffff;
+
+  --font-display: var(--font-display-face), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --container-max: 1240px;
+  --radius: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

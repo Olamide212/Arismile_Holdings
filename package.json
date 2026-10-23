@@ -26,7 +26,13 @@
     "dev:datu-kalinga": "npm run dev --workspace=@arismile/datu-kalinga",
     "build:datu-kalinga": "turbo run build --filter=@arismile/datu-kalinga...",
     "dev:mind-age": "npm run dev --workspace=@arismile/mind-age",
-    "build:mind-age": "turbo run build --filter=@arismile/mind-age..."
+    "build:mind-age": "turbo run build --filter=@arismile/mind-age...",
+    "dev:arismile-advisory": "npm run dev --workspace=@arismile/arismile-advisory",
+    "build:arismile-advisory": "turbo run build --filter=@arismile/arismile-advisory...",
+    "dev:cadillac-security": "npm run dev --workspace=@arismile/cadillac-security",
+    "build:cadillac-security": "turbo run build --filter=@arismile/cadillac-security...",
+    "dev:petogas": "npm run dev --workspace=@arismile/petogas",
+    "build:petogas": "turbo run build --filter=@arismile/petogas..."
   },
   "devDependencies": {
     "turbo": "^2.11.10",

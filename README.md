@@ -11,8 +11,11 @@ apps/
   oceania/        @arismile/oceania       scaffold
   datu-kalinga/   @arismile/datu-kalinga  scaffold
   mind-age/       @arismile/mind-age      scaffold
+  arismile-advisory/  @arismile/arismile-advisory  first version (one-page site)
+  cadillac-security/  @arismile/cadillac-security  first version (one-page site)
+  petogas/            @arismile/petogas            first version (one-page site)
 packages/
-  brand/          @arismile/brand    verified group facts (contacts, offices, subsidiaries)
+  brand/          @arismile/brand    verified group facts (contacts, offices, subsidiaries) and subsidiary profile copy
   ui/             @arismile/ui       optional, design-neutral primitives (Container, SkipLink, BrandIcon, cn)
   config/         @arismile/config   shared tsconfig presets + ESLint flat config
 ```
@@ -34,6 +37,7 @@ Holdings design.
 | `npm install` | Install every workspace and link the `@arismile/*` packages |
 | `npm run dev:holdings` | Holdings dev server on http://localhost:3000 |
 | `npm run dev:9town` / `dev:oceania` / `dev:datu-kalinga` / `dev:mind-age` | Ports 3001 / 3002 / 3003 / 3004 |
+| `npm run dev:arismile-advisory` / `dev:cadillac-security` / `dev:petogas` | Ports 3005 / 3006 / 3008 |
 | `npm run build:holdings` | Build Holdings and its workspace dependencies (`turbo --filter=@arismile/holdings...`) |
 | `npm run build:9town` (etc.) | Same for each subsidiary app |
 | `npm run build` | Build every app (Turborepo, cached) |
@@ -61,7 +65,10 @@ Permanent redirects keep the old WordPress URLs working:
 `/9town-nigeria-limited`, `/oceania-limited`, `/datu-kalinga`, `/mind-age` →
 `/subsidiaries/...`, and `/services` → `/#services` (see `apps/holdings/next.config.ts`).
 
-Content lives in `apps/holdings/lib/content/*` and `packages/brand/src/index.ts`.
+Content lives in `apps/holdings/lib/content/*` and `packages/brand/src`. Subsidiary
+copy (intro, services, statements, values) is in `packages/brand/src/profiles.ts`
+and is shared by the Holdings subsidiary pages and the subsidiary sites; each app
+keeps its own images.
 Values that differ between the two source sites carry a `needsVerification`
 note in `@arismile/brand`.
 
@@ -83,6 +90,9 @@ Create **one Vercel project per app**, all connected to this repository:
 | Oceania | `apps/oceania` | Next.js |
 | Datu Kalinga | `apps/datu-kalinga` | Next.js |
 | Mind Age | `apps/mind-age` | Next.js |
+| Arismile Advisory | `apps/arismile-advisory` | Next.js |
+| Cadillac Security | `apps/cadillac-security` | Next.js |
+| Petogas | `apps/petogas` | Next.js |
 
 - **Install:** Vercel detects the root `package-lock.json` and npm workspaces.
   It runs `npm install` at the repository root, which links the `@arismile/*`
@@ -107,3 +117,12 @@ Create **one Vercel project per app**, all connected to this repository:
 - **Old domain:** to retire `arismile.com.ng`, add it to the Holdings project
   and set it to redirect to `arismile.ng`. The legacy path redirects above
   then still apply.
+
+## Subsidiary sites (Advisory, Cadillac, Petogas)
+
+Each is a one-page site (hero, about, services, mission/values, contact) with
+its own design tokens in `app/globals.css`, fonts in `app/layout.tsx`, and
+presentation settings (hero style, headings, images) in `lib/site.ts`. They
+share component structure today but are independent copies, so each can be
+redesigned without affecting the others. Contact buttons use the group email
+and phone until each company has its own contact details.
