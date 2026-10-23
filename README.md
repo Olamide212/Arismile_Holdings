@@ -7,17 +7,18 @@ a single root `package-lock.json`.
 ```
 apps/
   holdings/       @arismile/holdings      arismile.ng: rebuild of the original WordPress site
-  9town/          @arismile/9town         scaffold
-  oceania/        @arismile/oceania       scaffold
-  datu-kalinga/   @arismile/datu-kalinga  scaffold
-  mind-age/       @arismile/mind-age      scaffold
-  arismile-advisory/  @arismile/arismile-advisory  first version (one-page site)
-  cadillac-security/  @arismile/cadillac-security  first version (one-page site)
-  petogas/            @arismile/petogas            first version (one-page site)
+  9town/          @arismile/9town         multi-page site
+  oceania/        @arismile/oceania       multi-page site
+  datu-kalinga/   @arismile/datu-kalinga  multi-page site
+  mind-age/       @arismile/mind-age      multi-page site
+  arismile-advisory/  @arismile/arismile-advisory  multi-page site
+  cadillac-security/  @arismile/cadillac-security  multi-page site
+  petogas/            @arismile/petogas            multi-page site
 packages/
   brand/          @arismile/brand    verified group facts (contacts, offices, subsidiaries) and subsidiary profile copy
   ui/             @arismile/ui       optional, design-neutral primitives (Container, SkipLink, BrandIcon, cn)
   config/         @arismile/config   shared tsconfig presets + ESLint flat config
+  site-kit/       @arismile/site-kit themeable page templates + components for the subsidiary sites
 ```
 
 Each app owns its own pages, design tokens (`app/globals.css`), fonts, images
@@ -131,11 +132,25 @@ Create **one Vercel project per app**, all connected to this repository:
   and set it to redirect to `arismile.ng`. The legacy path redirects above
   then still apply.
 
-## Subsidiary sites (Advisory, Cadillac, Petogas)
+## Subsidiary sites
 
-Each is a one-page site (hero, about, services, mission/values, contact) with
-its own design tokens in `app/globals.css`, fonts in `app/layout.tsx`, and
-presentation settings (hero style, headings, images) in `lib/site.ts`. They
-share component structure today but are independent copies, so each can be
-redesigned without affecting the others. Contact buttons use the group email
-and phone until each company has its own contact details.
+All seven subsidiary apps are multi-page sites built on `@arismile/site-kit`:
+
+| Route | Content |
+| --- | --- |
+| `/` | Hero, introduction, services, why-us highlights, process, industries, call to action |
+| `/about` | Story, mission/vision/values, process, company-specific sections (e.g. Cadillac's creed) |
+| `/services` and `/services/[slug]` | Service overview, and one page per service (overview, what's included, process, related services) |
+| `/industries` | Sectors served |
+| `/contact` | Contact details, validated enquiry form (`/api/contact`) and FAQ |
+| `/privacy-policy` | Privacy policy naming the subsidiary |
+
+Each site owns its identity: colour tokens and radius in `app/globals.css`,
+fonts in `app/layout.tsx`, images in `public/images` (`lib/images.ts`), and all
+content in `lib/site.ts`. Verified copy comes from `@arismile/brand`; content
+marked as drafted in `lib/site.ts` was written for these sites and should be
+reviewed by each company before launch. Any route file can be replaced with
+custom JSX if a site needs a bespoke page.
+
+The contact form forwards to `CONTACT_WEBHOOK_URL` when set (see each app's
+`.env.example`); without it, visitors are offered a pre-filled email instead.

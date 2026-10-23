@@ -1,33 +1,52 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
+@source "../../../packages/site-kit/src";
 
-/*
- * Datu Kalinga brand tokens (taken from the company logo). Placeholder identity
- * until this site's own design is commissioned; deliberately independent of
- * the Holdings design system.
- */
+/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
-  --color-primary: #1f9d55;
-  --color-accent: #b5a88f;
-  --color-ink: #141414;
-  --color-surface: #eef5f4;
+  --color-bg: #ffffff;
+  --color-fg: #161a17;
+  --color-surface: #f3f1ec;
+  --color-primary: #1f7a45;
+  --color-on-primary: #ffffff;
+  --color-accent: #1f7a45;
+  --color-highlight: #c2b38f;
+  --color-band: #17251d;
+  --color-on-band: #ffffff;
+
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --container-max: 1180px;
+  --container-max: 1240px;
+  --radius: 0px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

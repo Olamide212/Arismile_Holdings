@@ -1,33 +1,52 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
+@source "../../../packages/site-kit/src";
 
-/*
- * Mind Age brand tokens (taken from the company logo). Placeholder identity
- * until this site's own design is commissioned; deliberately independent of
- * the Holdings design system.
- */
+/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
-  --color-primary: #7a1f2b;
-  --color-accent: #b9b4e6;
-  --color-ink: #2b2b2f;
+  --color-bg: #ffffff;
+  --color-fg: #221f2b;
   --color-surface: #f6f4fb;
+  --color-primary: #7a1f2b;
+  --color-on-primary: #ffffff;
+  --color-accent: #7a1f2b;
+  --color-highlight: #c4bff0;
+  --color-band: #1b1726;
+  --color-on-band: #ffffff;
+
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --container-max: 1180px;
+  --container-max: 1240px;
+  --radius: 14px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

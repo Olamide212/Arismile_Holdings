@@ -1,40 +1,37 @@
+import { group } from "@arismile/brand";
+import { rootMetadata, SiteFooter, SiteHeader, siteEmail } from "@arismile/site-kit";
 import { SkipLink } from "@arismile/ui";
-import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
-import { siteUrl, subsidiary, summary } from "@/lib/site";
+import type { Viewport } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const display = Playfair_Display({ subsets: ["latin"], variable: "--font-display-face", display: "swap" });
 const body = Inter({ subsets: ["latin"], variable: "--font-body-face", display: "swap" });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: `${subsidiary.legalName} | ${subsidiary.tagline}`,
-    template: `%s | ${subsidiary.legalName}`,
-  },
-  description: summary,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    siteName: subsidiary.legalName,
-    title: subsidiary.legalName,
-    description: summary,
-  },
+export const metadata = rootMetadata(site);
+
+export const viewport: Viewport = {
+  themeColor: "#141414",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body className="flex min-h-dvh flex-col">
+      <body className="min-h-dvh overflow-x-clip bg-bg text-fg">
         <SkipLink href="#main" />
-        <SiteHeader />
-        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+        <SiteHeader
+          name={site.name}
+          logo={site.logo}
+          logoClassName={site.logoClassName}
+          services={site.services.items.map(({ slug, title }) => ({ slug, title }))}
+          phone={{ display: group.phone.display, href: group.phone.href }}
+          email={siteEmail(site)}
+        />
+        <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>
-        <SiteFooter />
+        <SiteFooter site={site} />
       </body>
     </html>
   );

@@ -1,33 +1,52 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
+@source "../../../packages/site-kit/src";
 
-/*
- * Oceania brand tokens (taken from the company logo). Placeholder identity
- * until this site's own design is commissioned; deliberately independent of
- * the Holdings design system.
- */
+/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
-  --color-primary: #0b74c4;
-  --color-accent: #7cc4f2;
-  --color-ink: #1f2a33;
-  --color-surface: #eef7fd;
+  --color-bg: #ffffff;
+  --color-fg: #10253a;
+  --color-surface: #eef6fb;
+  --color-primary: #0b6bb3;
+  --color-on-primary: #ffffff;
+  --color-accent: #0a5c9c;
+  --color-highlight: #7cc4f2;
+  --color-band: #0a2540;
+  --color-on-band: #ffffff;
+
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --container-max: 1180px;
+  --container-max: 1240px;
+  --radius: 8px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }

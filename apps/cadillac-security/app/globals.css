@@ -1,11 +1,9 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
+@source "../../../packages/site-kit/src";
 
-/*
- * Cadillac Security design tokens (palette taken from the company logo). Every
- * component reads these, so the site's identity is defined here.
- */
+/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
   --color-bg: #0b0c0f;
   --color-fg: #eef0f3;
@@ -36,13 +34,20 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-highlight);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
 

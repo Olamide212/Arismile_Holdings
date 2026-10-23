@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@arismile/brand": "*",
+    "@arismile/site-kit": "*",
     "@arismile/ui": "*",
+    "lucide-react": "^1.61.0",
     "next": "16.4.3",
     "react": "19.3.1",
     "react-dom": "19.3.1"

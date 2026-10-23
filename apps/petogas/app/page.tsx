@@ -1,19 +1,8 @@
-import { About } from "@/components/About";
-import { ContactSection } from "@/components/ContactSection";
-import { Groups } from "@/components/Groups";
-import { Hero } from "@/components/Hero";
-import { Services } from "@/components/Services";
-import { Statements } from "@/components/Statements";
+import { HomePage, pageMetadata } from "@arismile/site-kit";
+import { site } from "@/lib/site";
 
-export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <About />
-      <Services />
-      <Statements />
-      <Groups />
-      <ContactSection />
-    </>
-  );
+export const metadata = pageMetadata("/", undefined, site.profile.summary);
+
+export default function Page() {
+  return <HomePage site={site} />;
 }

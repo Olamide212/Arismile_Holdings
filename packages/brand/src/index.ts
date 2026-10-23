@@ -110,6 +110,8 @@ export interface SubsidiaryRecord {
   holdingsPath: `/subsidiaries/${SubsidiarySlug}`;
   /** The company's own website, where one has been assigned. */
   website?: `https://${string}`;
+  /** The company's own email address (falls back to the group email). */
+  email?: string;
 }
 
 /** Order follows the arismile.ng homepage (original four first). */
@@ -123,6 +125,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     tagline: "Architecting Sustainable Urban Futures",
     holdingsPath: "/subsidiaries/nine-town",
     website: "https://9townnigltd.com",
+    email: "info@9townnigltd.com",
   },
   {
     slug: "oceania",
@@ -133,6 +136,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     tagline: "Redefining the Frontier of Marine and Energy Engineering",
     holdingsPath: "/subsidiaries/oceania",
     website: "https://oceanialtd.com",
+    email: "info@oceanialtd.com",
   },
   {
     slug: "datu-kalinga",
@@ -143,6 +147,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     tagline: "Pioneering the Future of Global Mineral Resources",
     holdingsPath: "/subsidiaries/datu-kalinga",
     website: "https://datukalinga.com",
+    email: "info@datukalinga.com",
   },
   {
     slug: "mind-age",
@@ -171,6 +176,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     tagline: "Securing Assets. Protecting Life. Benchmarking Global Excellence.",
     holdingsPath: "/subsidiaries/cadillac-security",
     website: "https://cadillacsecurity.com.ng",
+    email: "info@cadillacsecurity.com.ng",
   },
   {
     slug: "petogas-limited",
@@ -181,12 +187,18 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     tagline: "Fueling Progress. Powering the Future of the Indigenous Energy Frontier.",
     holdingsPath: "/subsidiaries/petogas-limited",
     website: "https://petogas.com",
+    email: "info@petogas.com",
   },
 ];
 
 /** "https://www.example.com/" -> "example.com", for link labels. */
 export function displayDomain(url: string): string {
   return new URL(url).hostname.replace(/^www\./, "");
+}
+
+/** Email address for a subsidiary's enquiries. */
+export function subsidiaryEmail(record: Pick<SubsidiaryRecord, "email">): string {
+  return record.email ?? group.email;
 }
 
 export function getSubsidiary(slug: string): SubsidiaryRecord | undefined {

@@ -1,33 +1,52 @@
 @import "tailwindcss";
 
 @source "../../../packages/ui/src";
+@source "../../../packages/site-kit/src";
 
-/*
- * 9-Town brand tokens (taken from the company logo). Placeholder identity
- * until this site's own design is commissioned; deliberately independent of
- * the Holdings design system.
- */
+/* Brand tokens (palette taken from the company logo). Every site-kit component reads these. */
 @theme {
+  --color-bg: #ffffff;
+  --color-fg: #141414;
+  --color-surface: #faf5ef;
   --color-primary: #f48120;
-  --color-accent: #ffb36b;
-  --color-ink: #111111;
-  --color-surface: #fff6ee;
+  --color-on-primary: #141414;
+  --color-accent: #b4570f;
+  --color-highlight: #f48120;
+  --color-band: #141414;
+  --color-on-band: #ffffff;
+
   --font-display: var(--font-display-face), ui-serif, Georgia, serif;
   --font-sans: var(--font-body-face), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --container-max: 1180px;
+  --container-max: 1240px;
+  --radius: 4px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #ffffff;
-  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
