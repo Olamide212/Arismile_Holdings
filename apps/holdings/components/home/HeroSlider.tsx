@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { CtaButton } from "@/components/ui/CtaButton";
+import { ExternalLinkButton } from "@/components/ui/ExternalLinkButton";
 import type { ImageAsset } from "@/lib/content/types";
 
 export interface HeroSlide {
@@ -13,6 +14,8 @@ export interface HeroSlide {
   title: string;
   text: string;
   cta: { label: string; href: string };
+  /** External site, shown as a secondary button. */
+  website?: string;
   image: ImageAsset;
 }
 
@@ -142,10 +145,18 @@ export function HeroSlider({ slides, intervalMs = 6000, label = "Arismile Holdin
                       {slide.title}
                     </h2>
                     <p className="mx-auto mt-4 max-w-2xl text-base text-white/90 md:mt-5 md:text-xl">{slide.text}</p>
-                    <CtaButton href={slide.cta.href} className="mt-7 md:mt-9">
-                      {slide.cta.label}
-                      <span className="sr-only"> — {slide.title}</span>
-                    </CtaButton>
+                    <div className="mt-7 flex flex-wrap items-center justify-center gap-3 md:mt-9 md:gap-4">
+                      <CtaButton href={slide.cta.href}>
+                        {slide.cta.label}
+                        <span className="sr-only"> — {slide.title}</span>
+                      </CtaButton>
+                      {slide.website ? (
+                        <ExternalLinkButton href={slide.website}>
+                          Visit Website
+                          <span className="sr-only"> of {slide.title}</span>
+                        </ExternalLinkButton>
+                      ) : null}
+                    </div>
                   </div>
                 </Container>
               </div>

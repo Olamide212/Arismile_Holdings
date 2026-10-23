@@ -110,10 +110,23 @@ Create **one Vercel project per app**, all connected to this repository:
   Variables) for Production and Preview. For Holdings, set
   `NEXT_PUBLIC_SITE_URL` and, once a form backend exists, `CONTACT_WEBHOOK_URL`.
   For subsidiary apps, set `NEXT_PUBLIC_SITE_URL` to the subsidiary's own domain.
-- **Domains:** add each domain under that project's Settings → Domains, e.g.
-  `arismile.ng` / `www.arismile.ng` → Holdings. Subsidiary domains are not yet
-  confirmed; add them to the matching project when they are. Point DNS as
-  Vercel instructs (an A record for the apex domain, a CNAME for `www`).
+- **Domains:** add each domain under that project's Settings → Domains and
+  point DNS as Vercel instructs (an A record for the apex domain, a CNAME for
+  `www`):
+
+  | Project | Domain |
+  | --- | --- |
+  | Holdings | `arismile.ng` |
+  | 9-Town | `9townnigltd.com` |
+  | Oceania | `oceanialtd.com` |
+  | Datu Kalinga | `datukalinga.com` |
+  | Cadillac Security | `cadillacsecurity.com.ng` |
+  | Petogas | `petogas.com` |
+  | Mind Age, Arismile Advisory | not assigned yet |
+
+  Subsidiary domains live in `website` in `packages/brand/src/index.ts`; the
+  Holdings site links to them and each subsidiary app uses its domain as the
+  default `NEXT_PUBLIC_SITE_URL`.
 - **Old domain:** to retire `arismile.com.ng`, add it to the Holdings project
   and set it to redirect to `arismile.ng`. The legacy path redirects above
   then still apply.

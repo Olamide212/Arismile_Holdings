@@ -108,6 +108,8 @@ export interface SubsidiaryRecord {
   tagline: string;
   /** Path of the subsidiary page on the Holdings site. */
   holdingsPath: `/subsidiaries/${SubsidiarySlug}`;
+  /** The company's own website, where one has been assigned. */
+  website?: `https://${string}`;
 }
 
 /** Order follows the arismile.ng homepage (original four first). */
@@ -120,6 +122,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Real Estate & Development",
     tagline: "Architecting Sustainable Urban Futures",
     holdingsPath: "/subsidiaries/nine-town",
+    website: "https://9townnigltd.com",
   },
   {
     slug: "oceania",
@@ -129,6 +132,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Maritime & Logistics",
     tagline: "Redefining the Frontier of Marine and Energy Engineering",
     holdingsPath: "/subsidiaries/oceania",
+    website: "https://oceanialtd.com",
   },
   {
     slug: "datu-kalinga",
@@ -138,6 +142,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Energy & Resources",
     tagline: "Pioneering the Future of Global Mineral Resources",
     holdingsPath: "/subsidiaries/datu-kalinga",
+    website: "https://datukalinga.com",
   },
   {
     slug: "mind-age",
@@ -165,6 +170,7 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Security & Logistics",
     tagline: "Securing Assets. Protecting Life. Benchmarking Global Excellence.",
     holdingsPath: "/subsidiaries/cadillac-security",
+    website: "https://cadillacsecurity.com.ng",
   },
   {
     slug: "petogas-limited",
@@ -174,8 +180,14 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Oil & Gas Services",
     tagline: "Fueling Progress. Powering the Future of the Indigenous Energy Frontier.",
     holdingsPath: "/subsidiaries/petogas-limited",
+    website: "https://petogas.com",
   },
 ];
+
+/** "https://www.example.com/" -> "example.com", for link labels. */
+export function displayDomain(url: string): string {
+  return new URL(url).hostname.replace(/^www\./, "");
+}
 
 export function getSubsidiary(slug: string): SubsidiaryRecord | undefined {
   return subsidiaries.find((s) => s.slug === slug);

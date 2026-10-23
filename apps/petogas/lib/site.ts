@@ -8,7 +8,8 @@ export const subsidiary: SubsidiaryRecord = record;
 /** Verified copy shared with the Holdings site (packages/brand/src/profiles.ts). */
 export const profile = subsidiaryProfiles["petogas-limited"];
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3008";
+/** Defaults to the company domain from @arismile/brand; override per environment. */
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? record.website ?? "http://localhost:3008";
 export const holdingsUrl = process.env.NEXT_PUBLIC_HOLDINGS_URL ?? holdingsSiteUrl;
 
 interface ImageAsset {

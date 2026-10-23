@@ -1,3 +1,4 @@
+import { displayDomain } from "@arismile/brand";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DiscoverMore } from "@/components/shared/DiscoverMore";
@@ -10,6 +11,7 @@ import {
   SubsidiaryStatements,
 } from "@/components/subsidiaries/SubsidiaryDetail";
 import { SubsidiariesSection } from "@/components/subsidiaries/SubsidiariesSection";
+import { ExternalLinkButton } from "@/components/ui/ExternalLinkButton";
 import { getSubsidiaryContent, subsidiaryContent } from "@/lib/content/subsidiaries";
 
 export const dynamicParams = false;
@@ -50,6 +52,11 @@ export default async function SubsidiaryPage({ params }: PageProps<"/subsidiarie
         subtitle={subsidiary.tagline}
         image={{ src: subsidiary.heroImage.src, alt: subsidiary.heroImage.alt }}
         breadcrumbs={[{ label: "Subsidiaries", href: "/subsidiaries" }]}
+        actions={
+          subsidiary.website ? (
+            <ExternalLinkButton href={subsidiary.website}>Visit {displayDomain(subsidiary.website)}</ExternalLinkButton>
+          ) : null
+        }
       />
       <SubsidiaryIntro subsidiary={subsidiary} />
       <SubsidiaryServices subsidiary={subsidiary} />

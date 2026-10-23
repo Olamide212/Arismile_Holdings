@@ -45,13 +45,25 @@ export function SubsidiariesSection({
         {layout === "carousel" ? (
           <SubsidiaryCarousel
             label={heading}
-            items={items.map((s) => ({ slug: s.slug, name: s.cardName, summary: s.summary, href: s.holdingsPath }))}
+            items={items.map((s) => ({
+              slug: s.slug,
+              name: s.cardName,
+              summary: s.summary,
+              href: s.holdingsPath,
+              website: s.website,
+            }))}
           />
         ) : (
           <ul className="mt-[30px] flex flex-wrap justify-center gap-2.5">
             {items.map((s, i) => (
               <li key={s.slug} {...reveal("up", stagger(i))} className="w-full sm:w-[calc(50%-5px)] lg:w-[calc(25%-7.5px)]">
-                <SubsidiaryCard number={i + 1} name={s.cardName} summary={s.summary} href={s.holdingsPath} />
+                <SubsidiaryCard
+                  number={i + 1}
+                  name={s.cardName}
+                  summary={s.summary}
+                  href={s.holdingsPath}
+                  website={s.website}
+                />
               </li>
             ))}
           </ul>

@@ -20,6 +20,7 @@ const heroSlides: HeroSlide[] = subsidiaryContent.map((s) => ({
   text: s.tagline,
   // "Explore Services" is the hero CTA configured for every subsidiary on arismile.ng.
   cta: { label: "Explore Services", href: s.holdingsPath },
+  website: s.website,
   image: s.heroImage,
 }));
 
@@ -36,7 +37,7 @@ const organizationJsonLd = {
   subOrganization: subsidiaryContent.map((s) => ({
     "@type": "Organization",
     name: s.legalName,
-    url: `${siteUrl}${s.holdingsPath}`,
+    url: s.website ?? `${siteUrl}${s.holdingsPath}`,
   })),
 };
 

@@ -11,6 +11,7 @@ export interface SubsidiaryCarouselItem {
   name: string;
   summary: string;
   href: string;
+  website?: string;
 }
 
 interface SubsidiaryCarouselProps {
@@ -88,7 +89,7 @@ export function SubsidiaryCarousel({ items, label }: SubsidiaryCarouselProps) {
             {...reveal("up", stagger(i))}
             className="w-[85%] shrink-0 snap-start sm:w-[calc(50%-5px)] lg:w-[calc(25%-7.5px)]"
           >
-            <SubsidiaryCard number={i + 1} name={item.name} summary={item.summary} href={item.href} />
+            <SubsidiaryCard number={i + 1} name={item.name} summary={item.summary} href={item.href} website={item.website} />
           </li>
         ))}
       </ul>
