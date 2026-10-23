@@ -5,4 +5,5 @@ export const logo: ImageAsset = { src: "/images/logo.jpg", alt: "Petogas \u2014 
 
 export const images: SiteContent["images"] = {
   hero: { src: "/images/hero.jpg", alt: "Energy and logistics terminal at sunrise", width: 1200, height: 900 },
+  about: { src: "/images/about.jpg", alt: "Oil refinery with storage tanks at golden hour", width: 1400, height: 933 },
 };

@@ -19,6 +19,7 @@ import {
   ValuesGrid,
 } from "./components/sections";
 import type { SiteContent } from "./types";
+import { reveal, stagger } from "./reveal";
 import { contactOptions, servicePath, siteEmail, siteGroups, siteValues } from "./utils";
 
 /* ------------------------------------------------------------------- Home */
@@ -33,23 +34,27 @@ export function HomePage({ site }: { site: SiteContent }) {
         <Container className="grid items-center gap-14 lg:grid-cols-2">
           <div>
             <SectionIntro id="intro-heading" eyebrow={`About ${site.name}`} title={site.about.title} />
-            <p className="mt-8 text-[17px] leading-[1.8] opacity-85">{site.profile.intro[0]}</p>
+            <p {...reveal("up", 100)} className="mt-8 text-[17px] leading-[1.8] opacity-85">
+              {site.profile.intro[0]}
+            </p>
             <ButtonLink href="/about" variant="outline" arrow className="mt-9">
               More about us
             </ButtonLink>
           </div>
-          {about ? (
-            <Image
-              src={about.src}
-              alt={about.alt}
-              width={about.width}
-              height={about.height}
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="aspect-[4/3] w-full rounded-(--radius) object-cover"
-            />
-          ) : (
-            <LogoPanel site={site} />
-          )}
+          <div {...reveal("right", 150)}>
+            {about ? (
+              <Image
+                src={about.src}
+                alt={about.alt}
+                width={about.width}
+                height={about.height}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="aspect-[4/3] w-full rounded-(--radius) object-cover"
+              />
+            ) : (
+              <LogoPanel site={site} />
+            )}
+          </div>
         </Container>
       </Section>
 
@@ -131,7 +136,7 @@ export function AboutPage({ site }: { site: SiteContent }) {
 
       <Section labelledBy="story-heading">
         <Container className="grid gap-14 lg:grid-cols-[5fr_7fr]">
-          <div className="lg:sticky lg:top-28 lg:self-start">
+          <div {...reveal("left")} className="lg:sticky lg:top-28 lg:self-start">
             {about ? (
               <Image
                 src={about.src}
@@ -147,7 +152,7 @@ export function AboutPage({ site }: { site: SiteContent }) {
           </div>
           <div>
             <SectionIntro id="story-heading" eyebrow="Our story" title={site.record.legalName} />
-            <div className="mt-8 space-y-5 text-[17px] leading-[1.8] opacity-85">
+            <div {...reveal("up", 100)} className="mt-8 space-y-5 text-[17px] leading-[1.8] opacity-85">
               {story.map((p) => (
                 <p key={p.slice(0, 32)}>{p}</p>
               ))}
@@ -253,13 +258,13 @@ export function ServiceDetailPage({ site, slug }: { site: SiteContent; slug: str
         <Container className="grid gap-14 lg:grid-cols-[7fr_5fr]">
           <div>
             <SectionIntro id="overview-heading" eyebrow="Overview" title={`How ${site.name} delivers`} />
-            <div className="mt-8 space-y-5 text-[17px] leading-[1.8] opacity-85">
+            <div {...reveal("up", 100)} className="mt-8 space-y-5 text-[17px] leading-[1.8] opacity-85">
               {service.overview.map((p) => (
                 <p key={p.slice(0, 32)}>{p}</p>
               ))}
             </div>
           </div>
-          <aside className="self-start rounded-(--radius) bg-surface p-8 lg:sticky lg:top-28">
+          <aside {...reveal("right", 150)} className="self-start rounded-(--radius) bg-surface p-8 lg:sticky lg:top-28">
             <span className="inline-flex size-12 items-center justify-center rounded-(--radius) bg-primary text-on-primary">
               <Icon aria-hidden className="size-6" strokeWidth={1.75} />
             </span>
@@ -296,7 +301,7 @@ export function ServiceDetailPage({ site, slug }: { site: SiteContent; slug: str
               {others.map((s) => {
                 const OtherIcon = s.icon;
                 return (
-                  <li key={s.slug}>
+                  <li key={s.slug} {...reveal("up", stagger(others.indexOf(s)))}>
                     <Link
                       href={servicePath(s.slug)}
                       className="group flex h-full items-center gap-4 rounded-(--radius) border border-fg/10 bg-bg p-5 transition-colors hover:border-accent"
@@ -352,7 +357,7 @@ export function ContactPage({ site }: { site: SiteContent }) {
       <PageHero site={site} eyebrow="Get in touch" title={site.contact.title} intro={site.contact.intro} crumb="Contact" />
       <Section tone="surface" labelledBy="form-heading">
         <Container className="grid gap-10 lg:grid-cols-[5fr_7fr]">
-          <div className="space-y-4">
+          <div {...reveal("left")} className="space-y-4">
             <InfoRow icon={<Phone className="size-5" />} title="Phone">
               <a href={group.phone.href} className="hover:text-accent">
                 {group.phone.display}
@@ -378,7 +383,7 @@ export function ContactPage({ site }: { site: SiteContent }) {
               </InfoRow>
             ))}
           </div>
-          <div className="self-start rounded-(--radius) bg-bg p-6 text-fg sm:p-10">
+          <div {...reveal("right", 150)} className="self-start rounded-(--radius) bg-bg p-6 text-fg sm:p-10">
             <h2 id="form-heading" className="font-display text-3xl font-semibold">
               Send us a message
             </h2>
@@ -427,7 +432,7 @@ export function PrivacyPage({ site }: { site: SiteContent }) {
       <PageHero site={site} eyebrow="Legal" title="Privacy Policy" />
       <Section labelledBy="privacy-heading">
         <Container>
-          <div className="mx-auto max-w-3xl space-y-8 text-[16px] leading-[1.8] [&_h2]:mb-3 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold">
+          <div {...reveal("up")} className="mx-auto max-w-3xl space-y-8 text-[16px] leading-[1.8] [&_h2]:mb-3 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold">
             <h2 id="privacy-heading" className="sr-only">
               Privacy policy
             </h2>

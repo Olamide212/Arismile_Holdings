@@ -114,6 +114,13 @@ const media: Record<SubsidiarySlug, SubsidiaryMedia> = {
       width: 1200,
       height: 900,
     },
+    // Unsplash License, photo by Red Shuheart (unsplash.com/photos/Wb4vcBqyGT8)
+    featureImage: {
+      src: "/images/subsidiaries/petogas-refinery.jpg",
+      alt: "Oil refinery with storage tanks at golden hour",
+      width: 1400,
+      height: 933,
+    },
     logo: {
       src: "/images/subsidiaries/petogas-limited-logo.jpg",
       alt: "Petogas logo",

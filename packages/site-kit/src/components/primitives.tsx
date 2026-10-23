@@ -2,6 +2,7 @@ import { cn } from "@arismile/ui";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { reveal } from "../reveal";
 
 interface ButtonLinkProps {
   href: string;
@@ -58,7 +59,7 @@ export function SectionIntro({
   className,
 }: SectionIntroProps) {
   return (
-    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
+    <div {...reveal("up")} className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       <p className={cn("text-[13px] font-semibold uppercase tracking-[0.25em]", eyebrowClassName)}>{eyebrow}</p>
       <h2 id={id} className="mt-3 font-display text-3xl font-semibold leading-tight md:text-[42px]">
         {title}

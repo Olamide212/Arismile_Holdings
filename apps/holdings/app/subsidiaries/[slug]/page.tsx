@@ -54,7 +54,12 @@ export default async function SubsidiaryPage({ params }: PageProps<"/subsidiarie
         breadcrumbs={[{ label: "Subsidiaries", href: "/subsidiaries" }]}
         actions={
           subsidiary.website ? (
-            <ExternalLinkButton href={subsidiary.website}>Visit {displayDomain(subsidiary.website)}</ExternalLinkButton>
+            <ExternalLinkButton href={subsidiary.website}>
+              {/* Temporary hosting URLs (e.g. *.vercel.app) read better as "Visit Website". */}
+              {displayDomain(subsidiary.website).endsWith(".vercel.app")
+                ? "Visit Website"
+                : `Visit ${displayDomain(subsidiary.website)}`}
+            </ExternalLinkButton>
           ) : null
         }
       />

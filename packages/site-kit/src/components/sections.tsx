@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { FaqItem, IconItem, ImageAsset, ServiceContent, SiteContent } from "../types";
 import { servicePath } from "../utils";
+import { reveal, stagger } from "../reveal";
 import { ButtonLink, Section, SectionIntro } from "./primitives";
 
 /* ----------------------------------------------------------------- Heroes */
@@ -34,7 +35,7 @@ export function HomeHero({ site }: { site: SiteContent }) {
         <Image src={image.src} alt={image.alt} fill priority sizes="100vw" className="-z-20 object-cover" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-band via-band/85 to-band/25" />
         <Container className="py-28 md:py-40 lg:py-48">
-          <div className="max-w-2xl">{copy}</div>
+          <div className="load-in max-w-2xl">{copy}</div>
         </Container>
       </section>
     );
@@ -43,8 +44,8 @@ export function HomeHero({ site }: { site: SiteContent }) {
   return (
     <section className="overflow-hidden bg-band text-on-band">
       <Container className="grid items-center gap-14 py-20 md:grid-cols-2 lg:py-28">
-        <div>{copy}</div>
-        <div className="relative mx-auto w-full max-w-xl">
+        <div className="load-in">{copy}</div>
+        <div className="load-in relative mx-auto w-full max-w-xl">
           <div aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rounded-(--radius) border-2 border-highlight" />
           <Image
             src={image.src}
@@ -90,7 +91,7 @@ export function PageHero({
     <section className="relative isolate overflow-hidden bg-band text-on-band">
       <Image src={bg.src} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-band/85" />
-      <Container className="py-20 md:py-28">
+      <Container className="load-in py-20 md:py-28">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1.5 text-[13px] uppercase tracking-wide opacity-80">
             {crumbs.map((c, i) => (
@@ -148,7 +149,7 @@ export function ServicesGrid({ services, limit }: { services: ServiceContent[]; 
   return (
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((service, i) => (
-        <li key={service.slug}>
+        <li key={service.slug} {...reveal("up", stagger(i))}>
           <ServiceCard service={service} index={i} />
         </li>
       ))}
@@ -161,8 +162,8 @@ export function ServicesGrid({ services, limit }: { services: ServiceContent[]; 
 export function FeatureGrid({ items, columns = 4 }: { items: IconItem[]; columns?: 3 | 4 }) {
   return (
     <ul className={cn("grid gap-6 sm:grid-cols-2", columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
-      {items.map(({ icon: Icon, title, body }) => (
-        <li key={title} className="rounded-(--radius) bg-surface p-7 text-fg">
+      {items.map(({ icon: Icon, title, body }, i) => (
+        <li key={title} {...reveal("up", stagger(i, columns))} className="rounded-(--radius) bg-surface p-7 text-fg">
           <Icon aria-hidden className="size-8 text-accent" strokeWidth={1.5} />
           <h3 className="mt-5 text-lg font-semibold leading-snug">{title}</h3>
           <p className="mt-3 text-[15px] leading-relaxed opacity-80">{body}</p>
@@ -178,7 +179,7 @@ export function ProcessSteps({ steps }: { steps: { title: string; body: string }
   return (
     <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((step, i) => (
-        <li key={step.title} className="relative border-t-2 border-on-band/20 pt-6">
+        <li key={step.title} {...reveal("up", stagger(i, 4))} className="relative border-t-2 border-on-band/20 pt-6">
           <span aria-hidden className="absolute -top-px left-0 h-0.5 w-12 bg-highlight" />
           <p className="font-display text-4xl font-semibold text-highlight">{String(i + 1).padStart(2, "0")}</p>
           <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
@@ -195,8 +196,8 @@ export function ValuesGrid({ items }: { items: ContentBlock[] }) {
   const cols = items.length === 2 || items.length === 4 ? "lg:grid-cols-2" : "lg:grid-cols-3";
   return (
     <ul className={cn("grid gap-6 sm:grid-cols-2", cols)}>
-      {items.map((item) => (
-        <li key={item.title} className="rounded-(--radius) border-l-4 border-primary bg-surface p-8 text-fg">
+      {items.map((item, i) => (
+        <li key={item.title} {...reveal("up", stagger(i, 2))} className="rounded-(--radius) border-l-4 border-primary bg-surface p-8 text-fg">
           <h3 className="font-display text-2xl font-semibold">{item.title}</h3>
           <p className="mt-4 leading-relaxed opacity-85">{item.body}</p>
         </li>
@@ -217,6 +218,7 @@ export function GroupSection({ group, index }: { group: ContentGroup; index: num
           {group.items.map((item, i) => (
             <li
               key={item.title}
+              {...reveal("up", stagger(i))}
               className={cn("rounded-(--radius) border-t-4 border-primary p-7", index % 2 === 0 ? "bg-surface" : "bg-bg")}
             >
               <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-accent">
@@ -238,7 +240,7 @@ export function CtaBand({ site }: { site: SiteContent }) {
   return (
     <section className="bg-bg py-20 text-fg lg:py-24">
       <Container>
-        <div className="relative overflow-hidden rounded-(--radius) bg-primary px-8 py-14 text-on-primary sm:px-14 lg:flex lg:items-center lg:justify-between lg:gap-12">
+        <div {...reveal("zoom")} className="relative overflow-hidden rounded-(--radius) bg-primary px-8 py-14 text-on-primary sm:px-14 lg:flex lg:items-center lg:justify-between lg:gap-12">
           <div aria-hidden className="absolute -right-24 -top-24 size-72 rounded-full border-[40px] border-on-primary/10" />
           <div className="relative max-w-2xl">
             <h2 className="font-display text-3xl font-semibold leading-tight md:text-4xl">{site.cta.title}</h2>
@@ -261,7 +263,7 @@ export function CtaBand({ site }: { site: SiteContent }) {
 
 export function FaqList({ items }: { items: FaqItem[] }) {
   return (
-    <div className="divide-y divide-fg/10 border-y border-fg/10">
+    <div {...reveal("up", 100)} className="divide-y divide-fg/10 border-y border-fg/10">
       {items.map((item) => (
         <details key={item.q} className="group py-5 [&_summary::-webkit-details-marker]:hidden">
           <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-left text-lg font-semibold">

@@ -157,6 +157,8 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Technology & Innovation",
     tagline: "Engineering the Future of the Global Digital Economy",
     holdingsPath: "/subsidiaries/mind-age",
+    // Temporary Vercel URL until a custom domain is assigned.
+    website: "https://mind-age.vercel.app",
   },
   {
     slug: "arismile-advisory",
@@ -166,6 +168,8 @@ export const subsidiaries: readonly SubsidiaryRecord[] = [
     industry: "Consulting & Strategy",
     tagline: "Navigating Complexity. Engineering Wealth.",
     holdingsPath: "/subsidiaries/arismile-advisory",
+    // Temporary Vercel URL until a custom domain is assigned.
+    website: "https://arismile-advisory-gamma.vercel.app",
   },
   {
     slug: "cadillac-security",

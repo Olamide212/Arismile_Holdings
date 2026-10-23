@@ -1,5 +1,5 @@
 import { group } from "@arismile/brand";
-import { rootMetadata, SiteFooter, SiteHeader, siteEmail } from "@arismile/site-kit";
+import { revealBootScript, rootMetadata, ScrollReveal, SiteFooter, SiteHeader, siteEmail } from "@arismile/site-kit";
 import { SkipLink } from "@arismile/ui";
 import type { Viewport } from "next";
 import { Inter, Sora } from "next/font/google";
@@ -17,8 +17,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    // The reveal boot script adds a class to <html> before hydration.
+    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+      </head>
       <body className="min-h-dvh overflow-x-clip bg-bg text-fg">
+        <ScrollReveal />
         <SkipLink href="#main" />
         <SiteHeader
           name={site.name}

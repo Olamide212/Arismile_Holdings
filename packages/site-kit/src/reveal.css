@@ -1,0 +1,58 @@
+/*
+ * Animate on scroll. `reveal-ready` is set before first paint by the boot
+ * script; <ScrollReveal> adds `.revealed` as each element enters the view.
+ * Visitors who prefer reduced motion see everything immediately.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-ready [data-reveal] {
+    opacity: 0;
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.65, 0.3, 1),
+      transform 0.8s cubic-bezier(0.2, 0.65, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  html.reveal-ready [data-reveal="up"] {
+    transform: translate3d(0, 36px, 0);
+  }
+  html.reveal-ready [data-reveal="left"] {
+    transform: translate3d(-48px, 0, 0);
+  }
+  html.reveal-ready [data-reveal="right"] {
+    transform: translate3d(48px, 0, 0);
+  }
+  html.reveal-ready [data-reveal="zoom"] {
+    transform: scale(0.94);
+  }
+  html.reveal-ready [data-reveal].revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hero and page-header copy animates on load (it is above the fold). */
+  .load-in > * {
+    animation: kit-load-in 0.9s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .load-in > :nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .load-in > :nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .load-in > :nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  .load-in > :nth-child(n + 5) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes kit-load-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

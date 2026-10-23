@@ -123,7 +123,8 @@ Create **one Vercel project per app**, all connected to this repository:
   | Datu Kalinga | `datukalinga.com` |
   | Cadillac Security | `cadillacsecurity.com.ng` |
   | Petogas | `petogas.com` |
-  | Mind Age, Arismile Advisory | not assigned yet |
+  | Mind Age | `mind-age.vercel.app` (temporary, until a domain is assigned) |
+  | Arismile Advisory | `arismile-advisory-gamma.vercel.app` (temporary) |
 
   Subsidiary domains live in `website` in `packages/brand/src/index.ts`; the
   Holdings site links to them and each subsidiary app uses its domain as the

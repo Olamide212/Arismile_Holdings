@@ -32,3 +32,5 @@ export {
   ServicesPage,
   serviceStaticParams,
 } from "./pages";
+export { ScrollReveal } from "./components/ScrollReveal";
+export { reveal, revealBootScript, stagger, type RevealVariant } from "./reveal";

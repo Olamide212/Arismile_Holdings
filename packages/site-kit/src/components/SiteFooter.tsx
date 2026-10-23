@@ -3,6 +3,7 @@ import { BrandIcon, Container } from "@arismile/ui";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import type { SiteContent } from "../types";
+import { reveal } from "../reveal";
 import { navItems, servicePath, siteEmail } from "../utils";
 
 /** Footer with services, company links, contact details and links to sister companies. */
@@ -13,7 +14,7 @@ export function SiteFooter({ site }: { site: SiteContent }) {
   return (
     <footer className="bg-band text-on-band">
       <Container className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1.2fr_1.2fr] lg:py-20">
-        <div>
+        <div {...reveal("up")}>
           <p className="font-display text-2xl font-semibold">{site.record.legalName}</p>
           <p className="mt-3 max-w-xs text-[15px] leading-relaxed opacity-75">{site.footerLine}</p>
           <ul className="mt-6 flex gap-2.5" aria-label="Social media">
@@ -119,7 +120,7 @@ export function SiteFooter({ site }: { site: SiteContent }) {
 
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div>
+    <div {...reveal("up", 100)}>
       <h2 className="text-[13px] font-semibold uppercase tracking-[0.2em] text-highlight">{title}</h2>
       <ul className="mt-5 space-y-3 text-[15px] leading-snug">{children}</ul>
     </div>
