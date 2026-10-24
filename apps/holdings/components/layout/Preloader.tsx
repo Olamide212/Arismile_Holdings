@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { PreloaderController } from "./PreloaderController";
 
 /**
- * First-load overlay with the Arismile logo. Fades out once the page has
- * loaded; a CSS fail-safe in globals.css hides it after 3s even without JS.
+ * First-load overlay with the Arismile logo. The inline boot script
+ * (lib/reveal.ts) fades it out once the HTML is parsed; a CSS fail-safe in
+ * globals.css hides it after 2.5s even without JS.
  */
 export function Preloader() {
   return (
@@ -15,7 +15,6 @@ export function Preloader() {
         </div>
         <span className="sr-only">Loading Arismile Holdings</span>
       </div>
-      <PreloaderController />
     </>
   );
 }

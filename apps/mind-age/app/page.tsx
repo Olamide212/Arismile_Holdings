@@ -79,7 +79,7 @@ export default function HomePage() {
         <Container className="grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
           {about ? (
             <div {...reveal("left")} className="relative mx-auto w-full max-w-md">
-              <div aria-hidden className="absolute -inset-4 -z-10 rounded-[32px] bg-gradient-to-br from-primary/40 to-highlight/20 blur-2xl" />
+              <div aria-hidden className="absolute -inset-8 -z-10 rounded-[40px] bg-[radial-gradient(ellipse_at_center,rgb(179_38_58/0.4),rgb(196_191_240/0.12)_45%,transparent_70%)]" />
               <Image src={about.src} alt={about.alt} width={about.width} height={about.height} sizes="(min-width: 1024px) 28rem, 100vw" className="aspect-[4/5] w-full rounded-(--radius) border border-fg/10 object-cover" />
             </div>
           ) : null}

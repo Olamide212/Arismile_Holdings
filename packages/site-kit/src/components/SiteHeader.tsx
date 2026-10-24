@@ -50,6 +50,18 @@ export function SiteHeader(props: SiteHeaderProps) {
     if (returnFocus) toggleRef.current?.focus();
   }, []);
 
+
+  // A tap on the menu button before hydration is recorded by the inline boot
+  // script; open the menu as soon as the header is interactive.
+  useEffect(() => {
+    const w = window as Window & { __menuReady?: boolean; __menuPending?: boolean };
+    w.__menuReady = true;
+    if (!w.__menuPending) return;
+    w.__menuPending = false;
+    const frame = requestAnimationFrame(() => setDrawerOpen(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
@@ -81,6 +93,9 @@ export function SiteHeader(props: SiteHeaderProps) {
 
   let bar: ReactNode;
   let wrapperClass = "";
+  // Frosted background drawn on a child layer: a backdrop-filter on the header
+  // itself would trap the fixed-position drawer inside the header.
+  let glass = false;
 
   switch (variant) {
     case "overlay": {
@@ -160,7 +175,8 @@ export function SiteHeader(props: SiteHeaderProps) {
       );
       break;
     case "hud":
-      wrapperClass = "sticky top-0 z-50 border-b border-fg/15 bg-bg/95 text-fg backdrop-blur";
+      wrapperClass = "sticky top-0 z-50 border-b border-fg/15 text-fg";
+      glass = true;
       bar = (
         <>
           <div className="border-b border-fg/10 bg-band">
@@ -222,7 +238,8 @@ export function SiteHeader(props: SiteHeaderProps) {
       );
       break;
     default:
-      wrapperClass = "sticky top-0 z-50 border-b border-fg/10 bg-bg/95 text-fg backdrop-blur";
+      wrapperClass = "sticky top-0 z-50 border-b border-fg/10 text-fg";
+      glass = true;
       bar = (
         <Container className="flex h-20 items-center justify-between gap-6">
           {logoEl()}
@@ -240,6 +257,7 @@ export function SiteHeader(props: SiteHeaderProps) {
 
   return (
     <header className={wrapperClass}>
+      {glass ? <div aria-hidden className="absolute inset-0 -z-10 bg-bg/95 backdrop-blur" /> : null}
       {bar}
       <Drawer
         open={drawerOpen}
@@ -435,6 +453,15 @@ function Drawer({
   const [servicesOpen, setServicesOpen] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
 
+  // Items cascade in after the panel starts sliding, and fade out quickly on close.
+  const stagger = (i: number) => ({
+    className: cn(
+      "transition-[opacity,transform] ease-out",
+      open ? "translate-x-0 opacity-100 duration-500" : "-translate-x-6 opacity-0 duration-150",
+    ),
+    style: { transitionDelay: open ? `${120 + i * 45}ms` : "0ms" },
+  });
+
   useEffect(() => {
     if (!open) return;
     const root = document.documentElement;
@@ -456,18 +483,23 @@ function Drawer({
       <div
         aria-hidden
         onClick={() => onClose(true)}
-        className={cn("fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300", open ? "opacity-100" : "pointer-events-none opacity-0")}
+        className={cn(
+          "fixed inset-0 z-[60] bg-black/60 transition-[opacity,backdrop-filter] duration-500",
+          open ? "opacity-100 backdrop-blur-[2px]" : "pointer-events-none opacity-0 backdrop-blur-0",
+        )}
       />
       <nav
         id="site-drawer"
         aria-label="Mobile"
         inert={!open}
         className={cn(
-          "fixed inset-y-0 left-0 z-[70] flex w-[85%] max-w-sm flex-col bg-bg text-fg shadow-2xl transition-transform duration-300 ease-out",
-          open ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-[70] flex w-[85%] max-w-sm flex-col bg-bg text-fg shadow-2xl transition-transform",
+          open
+            ? "translate-x-0 duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            : "-translate-x-full duration-300 ease-[cubic-bezier(0.55,0,1,0.45)]",
         )}
       >
-        <div className="flex items-center justify-between border-b border-fg/10 px-5 py-4">
+        <div style={stagger(0).style} className={cn("flex items-center justify-between border-b border-fg/10 px-5 py-4", stagger(0).className)}>
           <Link href="/" onClick={() => onClose(false)} aria-label={`${name} home`}>
             <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} className={cn(logoClassName, "max-h-11 w-auto")} />
           </Link>
@@ -483,7 +515,7 @@ function Drawer({
         </div>
 
         <ul className="flex-1 divide-y divide-fg/10 overflow-y-auto overscroll-contain">
-          {navItems.map((item) => {
+          {navItems.map((item, i) => {
             const active = isActive(pathname, item.href);
             const linkClass = cn(
               "block flex-1 border-l-4 px-5 py-4 text-[15px] font-semibold uppercase tracking-wide",
@@ -491,7 +523,7 @@ function Drawer({
             );
             if (item.href !== "/services") {
               return (
-                <li key={item.href}>
+                <li key={item.href} {...stagger(i + 1)}>
                   <Link href={item.href} onClick={() => onClose(false)} aria-current={active ? "page" : undefined} className={linkClass}>
                     {item.label}
                   </Link>
@@ -499,7 +531,7 @@ function Drawer({
               );
             }
             return (
-              <li key={item.href}>
+              <li key={item.href} {...stagger(i + 1)}>
                 <div className="flex items-center">
                   <Link href={item.href} onClick={() => onClose(false)} aria-current={active ? "page" : undefined} className={linkClass}>
                     {item.label}
@@ -533,7 +565,7 @@ function Drawer({
           })}
         </ul>
 
-        <div className="space-y-2 border-t border-fg/10 px-5 py-5 text-[14px] text-fg/80">
+        <div style={stagger(navItems.length + 1).style} className={cn("space-y-2 border-t border-fg/10 px-5 py-5 text-[14px] text-fg/80", stagger(navItems.length + 1).className)}>
           <a href={phone.href} className="flex items-center gap-2.5 hover:text-accent">
             <Phone aria-hidden className="size-4 text-accent" />
             {phone.display}

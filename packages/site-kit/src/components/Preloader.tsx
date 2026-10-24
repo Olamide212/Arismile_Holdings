@@ -1,12 +1,11 @@
 import { cn } from "@arismile/ui";
 import Image from "next/image";
 import type { ImageAsset } from "../types";
-import { PreloaderController } from "./PreloaderController";
 
 /**
  * Branded first-load overlay. Server-rendered so it shows immediately; the
- * controller fades it out once the page has loaded, and a CSS fail-safe
- * (see reveal.css) hides it after 3s even if JavaScript never runs.
+ * inline boot script (reveal.ts) fades it out once the HTML is parsed, and a
+ * CSS fail-safe (reveal.css) hides it after 2.5s even if JavaScript never runs.
  */
 export function Preloader({ logo, logoClassName, label }: { logo: ImageAsset; logoClassName?: string; label: string }) {
   return (
@@ -18,7 +17,6 @@ export function Preloader({ logo, logoClassName, label }: { logo: ImageAsset; lo
         </div>
         <span className="sr-only">{label}</span>
       </div>
-      <PreloaderController />
     </>
   );
 }

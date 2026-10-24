@@ -12,6 +12,8 @@ export interface Office {
   /** Address lines, rendered one per line. */
   lines: string[];
   city: "Abuja" | "Lagos";
+  /** Search text for maps and directions (street-level, no suite numbers). */
+  mapQuery: string;
   needsVerification?: string;
 }
 
@@ -43,6 +45,7 @@ export const group = {
       label: "Abuja Corporate Office",
       lines: ["20, Queen Elizabeth Street", "Asokoro, Abuja"],
       city: "Abuja",
+      mapQuery: "20 Queen Elizabeth Street, Asokoro, Abuja, Nigeria",
     },
     {
       label: "Head Office Annex",
@@ -52,11 +55,13 @@ export const group = {
         "Maitama, Abuja",
       ],
       city: "Abuja",
+      mapQuery: "Federal Ministry of Justice, Maitama, Abuja, Nigeria",
     },
     {
       label: "Lagos Corporate Office",
       lines: ["The Admiralty Towers, Apartment B16", "8, Gerrard Road", "Ikoyi, Lagos"],
       city: "Lagos",
+      mapQuery: "The Admiralty Towers, Gerrard Road, Ikoyi, Lagos, Nigeria",
       needsVerification:
         'arismile.ng shows "Apartment B16, 8, Gerrard Road" on /contact but "Apartment B168, Gerrard Road" in the footer.',
     },
@@ -209,8 +214,8 @@ export function getSubsidiary(slug: string): SubsidiaryRecord | undefined {
   return subsidiaries.find((s) => s.slug === slug);
 }
 
-/** Absolute link back to the Holdings site, for use by subsidiary apps. */
-export const holdingsSiteUrl = "https://arismile.ng";
+/** The parent company's website, for links back from subsidiary apps. */
+export const holdingsSiteUrl = "https://www.arismileholdings.com";
 
 export {
   subsidiaryProfiles,

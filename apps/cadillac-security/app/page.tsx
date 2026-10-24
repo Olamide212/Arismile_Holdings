@@ -20,8 +20,8 @@ export default function HomePage() {
       <section className="relative isolate overflow-hidden bg-band text-fg">
         <Image src={hero.src} alt={hero.alt} fill priority sizes="100vw" className="-z-20 object-cover object-[70%_center]" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-bg via-bg/85 to-bg/20" />
-        <div aria-hidden className="sentinel-scan absolute inset-x-0 top-0 -z-10 h-24" />
-        <Container className="grid min-h-[78vh] items-center py-20">
+        <div aria-hidden className="sentinel-scan pointer-events-none absolute inset-0 -z-10" />
+        <Container className="grid min-h-[78svh] items-center py-20">
           <Brackets className="load-in max-w-2xl p-8 md:p-10">
             <div className="flex flex-wrap gap-x-6 gap-y-1">
               <Tag>Sector: Sub-Saharan Africa</Tag>

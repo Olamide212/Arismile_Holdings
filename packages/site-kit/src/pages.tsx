@@ -8,6 +8,7 @@ import type { ReactNode } from "react";
 import { ContactForm } from "./components/ContactForm";
 import { TeamGrid } from "./components/TeamGrid";
 import { FaqList } from "./components/FaqList";
+import { OfficeMap } from "./components/OfficeMap";
 import { ButtonLink, Section } from "./components/primitives";
 import { reveal, stagger } from "./reveal";
 import { breadcrumbJsonLd, faqJsonLd, JsonLd, serviceJsonLd, teamJsonLd } from "./seo";
@@ -322,7 +323,15 @@ export function ContactPage({ site, ui }: PageProps) {
           </div>
         </Container>
       </Section>
-      <Section labelledBy="faq-heading">
+      <Section labelledBy="map-heading">
+        <Container>
+          <Heading id="map-heading" eyebrow="Find us" title="Our offices" intro="Choose an office to see it on the map and get directions." />
+          <div {...reveal("up", 100)} className="mt-12">
+            <OfficeMap offices={group.offices} />
+          </div>
+        </Container>
+      </Section>
+      <Section tone="surface" labelledBy="faq-heading">
         <Container className="grid gap-12 lg:grid-cols-[4fr_8fr]">
           <Heading id="faq-heading" eyebrow="FAQ" title="Frequently asked questions" />
           <FaqList items={site.faqs} />

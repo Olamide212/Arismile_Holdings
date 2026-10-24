@@ -1,6 +1,6 @@
 import { subsidiaries } from "@arismile/brand";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://arismile.ng";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.arismileholdings.com";
 
 export const siteDescription =
   "Arismile Holdings is a Nigerian multi-sectoral investment and EPC group delivering power, oil and gas, mining, construction, procurement, security, advisory and technology services through its subsidiaries.";

@@ -8,13 +8,16 @@ import Link from "next/link";
  * backgrounds, bento-grid services, gradient-bordered tiles and a stepper.
  */
 
-/** Grid lines + radial glow, absolutely positioned behind content. */
+/**
+ * Grid lines + radial glow, absolutely positioned behind content. The glow is
+ * drawn with radial gradients rather than large blur filters, which are very
+ * expensive to paint on phones.
+ */
 export function Glow({ className }: { className?: string }) {
   return (
     <div aria-hidden className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden", className)}>
       <div className="circuit-grid absolute inset-0 opacity-60" />
-      <div className="absolute left-1/2 top-0 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-primary/35 blur-[120px]" />
-      <div className="absolute right-[-10%] top-40 h-[360px] w-[480px] rounded-full bg-highlight/15 blur-[120px]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgb(179_38_58/0.38),transparent_70%),radial-gradient(ellipse_35%_30%_at_90%_30%,rgb(196_191_240/0.14),transparent_70%)]" />
     </div>
   );
 }
@@ -85,7 +88,7 @@ const ServicesSection: SiteUI["ServicesSection"] = ({ eyebrow, title, intro, id,
           return (
             <li key={s.slug} {...reveal("up", stagger(i))} className={cn(big && "md:col-span-2 lg:row-span-2")}>
               <article className="group relative flex h-full flex-col overflow-hidden rounded-(--radius) border border-fg/10 bg-surface p-7 transition-colors hover:border-highlight/50">
-                <div aria-hidden className="absolute -right-16 -top-16 size-48 rounded-full bg-primary/25 opacity-0 blur-3xl transition-opacity group-hover:opacity-100" />
+                <div aria-hidden className="absolute -right-16 -top-16 size-56 rounded-full bg-[radial-gradient(circle,rgb(179_38_58/0.35),transparent_65%)] opacity-0 transition-opacity group-hover:opacity-100" />
                 <span className="inline-flex size-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/40 text-on-primary ring-1 ring-fg/10">
                   <Icon aria-hidden className="size-6" strokeWidth={1.75} />
                 </span>

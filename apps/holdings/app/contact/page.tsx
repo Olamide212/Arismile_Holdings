@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import type { ReactNode } from "react";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { OfficeMap } from "@/components/contact/OfficeMap";
 import { PageBanner } from "@/components/shared/PageBanner";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
@@ -104,6 +105,18 @@ export default function ContactPage() {
               Enquiries about partnerships, our subsidiaries’ services or careers are welcome.
             </p>
             <ContactForm />
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="map-heading" className="bg-white py-16 lg:py-20">
+        <Container>
+          <SectionHeading id="map-heading">Find Us</SectionHeading>
+          <p {...reveal("up", 100)} className="mb-8 max-w-2xl text-[15px] leading-relaxed text-body">
+            Choose an office to see it on the map and get directions.
+          </p>
+          <div {...reveal("up", 150)}>
+            <OfficeMap offices={group.offices} />
           </div>
         </Container>
       </section>

@@ -28,6 +28,18 @@ export function SiteHeader() {
     if (returnFocus) toggleRef.current?.focus();
   }, []);
 
+
+  // A tap on the menu button before hydration is recorded by the inline boot
+  // script; open the menu as soon as the header is interactive.
+  useEffect(() => {
+    const w = window as Window & { __menuReady?: boolean; __menuPending?: boolean };
+    w.__menuReady = true;
+    if (!w.__menuPending) return;
+    w.__menuPending = false;
+    const frame = requestAnimationFrame(() => setMobileOpen(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <header className="absolute inset-x-0 top-0 z-50">
       <Container className="flex min-h-[70px] items-center justify-between gap-6 py-3">
@@ -175,6 +187,15 @@ function MobileMenu({
   const [expanded, setExpanded] = useState<string | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
+  // Items cascade in after the panel starts sliding, and fade out quickly on close.
+  const stagger = (i: number) => ({
+    className: cn(
+      "transition-[opacity,transform] ease-out",
+      open ? "translate-x-0 opacity-100 duration-500" : "-translate-x-6 opacity-0 duration-150",
+    ),
+    style: { transitionDelay: open ? `${120 + i * 45}ms` : "0ms" },
+  });
+
   // While open: lock page scroll, focus the drawer, close on Escape.
   useEffect(() => {
     if (!open) return;
@@ -198,8 +219,8 @@ function MobileMenu({
         aria-hidden
         onClick={() => onClose(true)}
         className={cn(
-          "fixed inset-0 z-[60] bg-black/60 transition-opacity duration-300",
-          open ? "opacity-100" : "pointer-events-none opacity-0",
+          "fixed inset-0 z-[60] bg-black/60 transition-[opacity,backdrop-filter] duration-500",
+          open ? "opacity-100 backdrop-blur-[2px]" : "pointer-events-none opacity-0 backdrop-blur-0",
         )}
       />
 
@@ -208,11 +229,13 @@ function MobileMenu({
         aria-label="Mobile"
         inert={!open}
         className={cn(
-          "fixed inset-y-0 left-0 z-[70] flex w-[85%] max-w-sm flex-col bg-offwhite shadow-2xl transition-transform duration-300 ease-out",
-          open ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-[70] flex w-[85%] max-w-sm flex-col bg-offwhite shadow-2xl transition-transform",
+          open
+            ? "translate-x-0 duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            : "-translate-x-full duration-300 ease-[cubic-bezier(0.55,0,1,0.45)]",
         )}
       >
-        <div className="flex items-center justify-between border-b border-black/10 px-5 py-4">
+        <div style={stagger(0).style} className={cn("flex items-center justify-between border-b border-black/10 px-5 py-4", stagger(0).className)}>
           <Link href="/" onClick={() => onClose(false)} aria-label="Arismile Holdings home">
             <Image src="/images/logo/arismile-logo.png" alt="Arismile Holdings" width={136} height={54} className="h-[54px] w-auto" />
           </Link>
@@ -228,7 +251,7 @@ function MobileMenu({
         </div>
 
         <ul className="flex-1 divide-y divide-black/5 overflow-y-auto overscroll-contain">
-          {mainNav.map((item) => {
+          {mainNav.map((item, i) => {
             const active = isActive(pathname, item);
             const linkClass = cn(
               "block flex-1 border-l-4 px-5 py-4 text-[15px] font-medium text-body transition-colors hover:text-brand-green",
@@ -236,7 +259,7 @@ function MobileMenu({
             );
             if (!item.children) {
               return (
-                <li key={item.href}>
+                <li key={item.href} {...stagger(i + 1)}>
                   <Link href={item.href} className={linkClass} onClick={() => onClose(false)} aria-current={active ? "page" : undefined}>
                     {item.label}
                   </Link>
@@ -246,7 +269,7 @@ function MobileMenu({
             const isExpanded = expanded === item.href;
             const submenuId = `mobile-sub-${item.label.toLowerCase()}`;
             return (
-              <li key={item.href}>
+              <li key={item.href} {...stagger(i + 1)}>
                 <div className="flex items-center">
                   <Link href={item.href} className={linkClass} onClick={() => onClose(false)} aria-current={active ? "page" : undefined}>
                     {item.label}
@@ -284,7 +307,7 @@ function MobileMenu({
           })}
         </ul>
 
-        <div className="space-y-2 border-t border-black/10 px-5 py-5 text-[14px] text-body">
+        <div style={stagger(mainNav.length + 1).style} className={cn("space-y-2 border-t border-black/10 px-5 py-5 text-[14px] text-body", stagger(mainNav.length + 1).className)}>
           <a href={group.phone.href} className="flex items-center gap-2.5 hover:text-brand-green">
             <Phone aria-hidden className="size-4 text-brand-green" />
             {group.phone.display}

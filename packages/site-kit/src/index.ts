@@ -34,3 +34,4 @@ export {
   websiteJsonLd,
 } from "./seo";
 export { Preloader } from "./components/Preloader";
+export { mapsDirectionsUrl, mapsSearchUrl, OfficeMap } from "./components/OfficeMap";

@@ -66,16 +66,29 @@ body {
   background-size: 40px 40px;
 }
 
+/*
+ * Scan line: a full-height layer with the bright band in its middle, moved by
+ * its own height so the sweep always crosses the whole hero, whatever the
+ * screen size (and unaffected by mobile address-bar resizes).
+ */
 .sentinel-scan {
-  background: linear-gradient(to bottom, transparent, rgb(215 38 47 / 0.18), transparent);
-  animation: sentinel-scan 7s linear infinite;
+  background: linear-gradient(
+    to bottom,
+    transparent 44%,
+    rgb(215 38 47 / 0.05) 47%,
+    rgb(215 38 47 / 0.28) 50%,
+    rgb(215 38 47 / 0.05) 53%,
+    transparent 56%
+  );
+  will-change: transform;
+  animation: sentinel-scan 6s linear infinite;
 }
 
 @keyframes sentinel-scan {
   from {
-    transform: translateY(-100%);
+    transform: translate3d(0, -56%, 0);
   }
   to {
-    transform: translateY(900%);
+    transform: translate3d(0, 56%, 0);
   }
 }

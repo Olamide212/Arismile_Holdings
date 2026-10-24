@@ -6,7 +6,7 @@ a single root `package-lock.json`.
 
 ```
 apps/
-  holdings/       @arismile/holdings      arismile.ng: rebuild of the original WordPress site
+  holdings/       @arismile/holdings      www.arismileholdings.com: rebuild of the original WordPress site
   9town/          @arismile/9town         multi-page site
   oceania/        @arismile/oceania       multi-page site
   datu-kalinga/   @arismile/datu-kalinga  multi-page site
@@ -77,7 +77,7 @@ note in `@arismile/brand`.
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical base URL (default `https://arismile.ng`) |
+| `NEXT_PUBLIC_SITE_URL` | Canonical base URL (default `https://www.arismileholdings.com`) |
 | `CONTACT_WEBHOOK_URL` | Optional. The contact API forwards validated submissions here as JSON. When it is not set, the form says online messaging is unavailable and offers a pre-filled email; it never claims a message was sent. |
 
 ## Deploying to Vercel
@@ -117,7 +117,7 @@ Create **one Vercel project per app**, all connected to this repository:
 
   | Project | Domain |
   | --- | --- |
-  | Holdings | `arismile.ng` |
+  | Holdings | `www.arismileholdings.com` (apex `arismileholdings.com` redirects to www) |
   | 9-Town | `www.9townnigltd.com` (apex `9townnigltd.com` redirects to www) |
   | Oceania | `www.oceanialtd.com` (apex `oceanialtd.com` redirects to www) |
   | Datu Kalinga | `www.datukalinga.com` (apex `datukalinga.com` redirects to www) |
@@ -133,7 +133,7 @@ Create **one Vercel project per app**, all connected to this repository:
   Holdings site links to them and each subsidiary app uses its domain as the
   default `NEXT_PUBLIC_SITE_URL`.
 - **Old domain:** to retire `arismile.com.ng`, add it to the Holdings project
-  and set it to redirect to `arismile.ng`. The legacy path redirects above
+  and set it to redirect to `www.arismileholdings.com`. The legacy path redirects above
   then still apply.
 
 ## Subsidiary sites
@@ -190,7 +190,12 @@ The contact form forwards to `CONTACT_WEBHOOK_URL` when set (see each app's
   - A web app manifest (`/manifest.webmanifest`) and a sitemap including `/team`.
   - Subsidiary helpers live in `packages/site-kit/src/seo.tsx`; Holdings uses `apps/holdings/lib/seo.tsx`.
 - **Preloader:**
-  - A branded first-load overlay that fades out once the page is interactive and fonts are ready. It does not wait for images.
-  - A CSS fail-safe hides it after 3s even if JavaScript never runs.
+  - A branded first-load overlay, removed by the inline boot script as soon as the HTML is parsed and fonts are ready (at most 0.5s). It does not wait for React or images.
+  - A CSS fail-safe hides it after 2.5s even if JavaScript never runs.
+- **Mobile menu:**
+  - The drawer slides in with a cascading item animation and slides out quickly.
+  - A tap on the menu button before the page has hydrated is remembered, and the menu opens as soon as the page is ready.
+  - Never put `backdrop-filter`, `transform` or `filter` on a header element: they trap the fixed-position drawer inside the header. Draw frosted backgrounds on a child layer instead.
+- **Office map (Contact pages):** tabs for each office (from `group.offices` in `@arismile/brand`, using each office's `mapQuery`), an embedded Google Map and "Get directions" links. No API key is needed.
   - It is hidden from screen readers and respects reduced motion.
 - **Team data:** the leadership is the same for Holdings and every subsidiary. It lives in `packages/brand/src/leadership.ts`, so updating it there updates all eight sites. Team photos are in each app's `public/images/team/`.
